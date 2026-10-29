@@ -1,0 +1,51 @@
+/* ========================================================
+   ForKos Coffee - Global Stylesheet
+   Proyek: ForKos Coffee (Tugas Modul 2 PPPL)
+   Deskripsi: Palet warna dan styling komponen bertema kopi
+   ======================================================== */
+
+:root {
+    --coffee-dark: #3e2723;
+    --coffee-medium: #6d4c41;
+    --coffee-accent: #d7ccc8;
+    --coffee-light: #efebe9;
+}
+
+body {
+    background-color: #f7f5f2;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+}
+
+/* Navbar Theme */
+.navbar-coffee {
+    background-color: var(--coffee-dark);
+}
+
+/* Card Styling */
+.card-coffee {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card-header-coffee {
+    background-color: var(--coffee-medium);
+    color: #fff;
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+}
+
+/* Button Theme */
+.btn-coffee {
+    background-color: var(--coffee-dark);
+    border-color: var(--coffee-dark);
+    color: #fff;
+}
+
+.btn-coffee:hover {
+    background-color: #271613;
+    border-color: #271613;
+    color: #fff;
+}
+
