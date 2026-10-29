@@ -12,3 +12,5 @@ config/database.php
 Thumbs.db
 .vscode/
 
+# Panduan / Modul Praktikum
+docs/Modul/
