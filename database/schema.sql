@@ -10,3 +10,13 @@ CREATE TABLE IF NOT EXISTS menu (
     stock INT NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+USE forkos_coffee;
+
+INSERT INTO menu (name, category, price, stock) VALUES 
+('Espresso', 'Minuman', 18000, 50),
+('Cafe Latte', 'Minuman', 25000, 40),
+('Americano', 'Minuman', 20000, 45),
+('Matcha Latte', 'Minuman', 26000, 30),
+('Croissant Butter', 'Makanan', 22000, 20);
