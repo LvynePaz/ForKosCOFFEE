@@ -1,0 +1,14 @@
+# Database & local configs
+config/database.php
+.env
+.env.*
+!.env.example
+
+# Logs & temp files
+*.log
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+
