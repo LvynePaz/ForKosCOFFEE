@@ -1,7 +1,7 @@
 -- =====================================================
 -- Sample Data / Seeder for ForKos Coffee
 -- Target DBMS: MySQL / MariaDB (XAMPP)
--- Digunakan untuk testing 3 Fitur Utama (Menu & Kustomisasi, Checkout, Pelacakan)
+-- Digunakan untuk testing 3 Fitur Utama SDD & Modul CRUD
 -- =====================================================
 
 USE forkos_coffee;
@@ -20,6 +20,7 @@ TRUNCATE TABLE produk;
 TRUNCATE TABLE outlet;
 TRUNCATE TABLE kasir;
 TRUNCATE TABLE pengguna;
+TRUNCATE TABLE menu;
 
 -- 1. Data Kasir
 INSERT INTO kasir (id_kasir, nama) VALUES 
@@ -36,7 +37,7 @@ INSERT INTO outlet (id_outlet, nama_outlet, lokasi) VALUES
 (1, 'ForKos Coffee GC', 'Jl. Grand City No. 12, Balikpapan (0.4 km)'),
 (2, 'ForKos Coffee Batu Ampar', 'Jl. Soekarno Hatta Km. 4, Balikpapan (1.2 km)');
 
--- 4. Data Produk (Katalog Menu Kopi & Non-Kopi)
+-- 4. Data Produk (Katalog Menu Kopi & Non-Kopi SDD)
 INSERT INTO produk (id_produk, id_outlet, nama_produk, harga) VALUES 
 (1, 1, 'Caramel Macchiato', 26000),
 (2, 1, 'Coffee Aren Latte', 24000),
@@ -78,5 +79,13 @@ INSERT INTO detail_pesanan (id_detail, id_pesanan, id_produk, id_addon, kuantita
 
 INSERT INTO pembayaran (id_pembayaran, id_pesanan, metode_pembayaran, status_pembayaran) VALUES 
 (1, 1, 'QRIS', 'Success');
+
+-- 9. Data Legacy Menu (Agar CRUD index.php dkk tetap bisa menampilkan data)
+INSERT INTO menu (name, category, price, stock) VALUES 
+('Espresso', 'Minuman', 18000, 50),
+('Cafe Latte', 'Minuman', 25000, 40),
+('Americano', 'Minuman', 20000, 45),
+('Matcha Latte', 'Minuman', 26000, 30),
+('Croissant Butter', 'Makanan', 22000, 20);
 
 SET FOREIGN_KEY_CHECKS = 1;

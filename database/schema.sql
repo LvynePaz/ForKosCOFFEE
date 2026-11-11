@@ -14,6 +14,10 @@ USE forkos_coffee;
 -- Nonaktifkan pengecekan foreign key sementara agar pembuatan/penataan ulang tabel lancar
 SET FOREIGN_KEY_CHECKS = 0;
 
+-- ==========================================
+-- 1. TABEL UTAMA SESUAI DOKUMEN SDD (11 TABEL)
+-- ==========================================
+
 -- 1. Tabel Pengguna (Pelanggan)
 CREATE TABLE IF NOT EXISTS pengguna (
     id_pengguna INT AUTO_INCREMENT PRIMARY KEY,
@@ -120,6 +124,18 @@ CREATE TABLE IF NOT EXISTS pembayaran (
     status_pembayaran VARCHAR(50) NOT NULL DEFAULT 'Success',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_pembayaran_pesanan FOREIGN KEY (id_pesanan) REFERENCES pesanan(id_pesanan) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- ==========================================
+-- 2. TABEL LEGACY / MODUL 2 (Untuk kompatibilitas CRUD index.php dkk)
+-- ==========================================
+CREATE TABLE IF NOT EXISTS menu (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    price INT NOT NULL,
+    stock INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -1,51 +1,192 @@
 /* ========================================================
-   ForKos Coffee - Global Stylesheet
+   ForKos Coffee - Global Stylesheet (Tomoro Orange Edition)
    Proyek: ForKos Coffee (Tugas Modul 2 PPPL)
-   Deskripsi: Palet warna dan styling komponen bertema kopi
+   Deskripsi: Palet oranye-putih & styling komponen tim
    ======================================================== */
 
 :root {
-    --coffee-dark: #3e2723;
-    --coffee-medium: #6d4c41;
-    --coffee-accent: #d7ccc8;
-    --coffee-light: #efebe9;
+    /* Palet Utama Oranye & Putih Tomoro */
+    --coffee-primary: #fa5a00;         /* Oranye khas Tomoro */
+    --coffee-hover: #e04e00;           /* Oranye gelap saat disentuh/hover */
+    --coffee-light: #fff5ef;           /* Aksen oranye sangat lembut untuk card/tabel */
+    --coffee-border: #ffd8c2;          /* Garis batas oranye tipis */
+    
+    /* Netral & Dasar */
+    --coffee-dark: #fa5a00;            /* Menyelaraskan variabel lama Ciko ke oranye */
+    --coffee-medium: #e04e00;          /* Menyelaraskan header lama Ciko */
+    --coffee-accent: #ffd8c2;          
+    --text-dark: #1f242d;              /* Warna teks utama */
+    --text-muted: #6c757d;             /* Warna teks deskripsi/sekunder */
+    --bg-light: #f8f9fa;               /* Latar belakang halaman bersih */
+    --bg-white: #ffffff;
 }
 
 body {
-    background-color: #f7f5f2;
+    background-color: var(--bg-light);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: #333;
+    color: var(--text-dark);
+    min-height: 100vh;
 }
 
-/* Navbar Theme */
+/* ========================================================
+   1. Navbar Theme (Ciko & Global)
+   ======================================================== */
 .navbar-coffee {
-    background-color: var(--coffee-dark);
+    background-color: var(--bg-white) !important;
+    border-bottom: 2px solid var(--coffee-border);
+    box-shadow: 0 2px 12px rgba(250, 90, 0, 0.08);
 }
 
-/* Card Styling */
+.navbar-coffee .navbar-brand {
+    color: var(--coffee-primary) !important;
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.5px;
+}
+
+.navbar-coffee .nav-link {
+    color: var(--text-dark) !important;
+    font-weight: 500;
+    padding: 0.45rem 1rem !important;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+}
+
+.navbar-coffee .nav-link:hover,
+.navbar-coffee .nav-link.active {
+    color: var(--coffee-primary) !important;
+    background-color: var(--coffee-light);
+}
+
+/* ========================================================
+   2. Card Styling (Ciko & Global)
+   ======================================================== */
 .card-coffee {
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    background-color: var(--bg-white);
+    border: 1px solid var(--coffee-border);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(250, 90, 0, 0.06);
+    overflow: hidden;
 }
 
 .card-header-coffee {
-    background-color: var(--coffee-medium);
-    color: #fff;
-    border-top-left-radius: 12px !important;
-    border-top-right-radius: 12px !important;
+    background-color: var(--coffee-primary);
+    color: #ffffff;
+    font-weight: 700;
+    padding: 1rem 1.25rem;
+    border-bottom: none;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
 }
 
-/* Button Theme */
+/* ========================================================
+   3. Button Theme (Ciko & Global)
+   ======================================================== */
 .btn-coffee {
-    background-color: var(--coffee-dark);
-    border-color: var(--coffee-dark);
-    color: #fff;
+    background-color: var(--coffee-primary);
+    border-color: var(--coffee-primary);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 0.55rem 1.25rem;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 3px 8px rgba(250, 90, 0, 0.2);
 }
 
-.btn-coffee:hover {
-    background-color: #271613;
-    border-color: #271613;
-    color: #fff;
+.btn-coffee:hover,
+.btn-coffee:focus {
+    background-color: var(--coffee-hover);
+    border-color: var(--coffee-hover);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(250, 90, 0, 0.28);
 }
 
+/* Tombol Aksi Tambahan (Edit & Delete) */
+.btn-coffee-outline {
+    background-color: transparent;
+    color: var(--coffee-primary);
+    border: 1.5px solid var(--coffee-primary);
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.btn-coffee-outline:hover {
+    background-color: var(--coffee-light);
+    color: var(--coffee-hover);
+    border-color: var(--coffee-hover);
+}
+
+.btn-coffee-danger {
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+    color: #ffffff;
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.btn-coffee-danger:hover {
+    background-color: #d9363e;
+    border-color: #d9363e;
+    color: #ffffff;
+}
+
+/* ========================================================
+   4. Form Input Theme (Untuk Tambah & Edit Menu)
+   ======================================================== */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--coffee-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(250, 90, 0, 0.18) !important;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* ========================================================
+   5. Table Theme (Untuk Tampilan index.php Yisan)
+   ======================================================== */
+.table-coffee {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-coffee thead th {
+    background-color: var(--coffee-light);
+    color: var(--coffee-primary);
+    font-weight: 700;
+    border-top: none;
+    border-bottom: 2px solid var(--coffee-border);
+    padding: 0.9rem 1rem;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.table-coffee tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.table-coffee tbody tr:hover {
+    background-color: #fffaf7;
+}
+
+.badge-coffee {
+    background-color: var(--coffee-light);
+    color: var(--coffee-primary);
+    border: 1px solid var(--coffee-border);
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+}
