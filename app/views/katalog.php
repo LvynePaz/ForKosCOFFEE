@@ -1,25 +1,16 @@
 <?php
 /**
- * ForKos Coffee - UI-003: Halaman Katalog Menu & Kustomisasi
- * Letakkan di: app/views/katalog.php
- *
- * Variabel yang diharapkan dari Controller (jika kosong, dipakai data contoh):
- *   $outlet   => string nama outlet terpilih
- *   $produk   => array of ['id','nama','deskripsi','harga','kategori','gambar']
+ * View: Katalog Menu & Kustomisasi (UI-003)
+ * Arsitektur: MVC - View Layer (Flat View)
+ * Dokumen SDD: Bab 5.2.3 (UI-003)
+ * 
+ * @var string $outlet
+ * @var array  $produk
+ * @var array  $kategori
  */
-
-$outlet = $outlet ?? 'ForKos GC';
-
-$produk = $produk ?? [
-    ['id' => 1, 'nama' => 'Caramel Macchiato', 'deskripsi' => 'Espresso, susu, dan karamel lembut', 'harga' => 28000, 'kategori' => 'Kopi',     'gambar' => 'assets/img/kopi.png'],
-    ['id' => 2, 'nama' => 'Coffe Aren Latte',  'deskripsi' => 'Kopi susu dengan gula aren asli',     'harga' => 24000, 'kategori' => 'Kopi',     'gambar' => 'assets/img/kopi.png'],
-    ['id' => 3, 'nama' => 'Caffe Latte',       'deskripsi' => 'Espresso dengan susu segar',          'harga' => 25000, 'kategori' => 'Kopi',     'gambar' => 'assets/img/kopi.png'],
-    ['id' => 4, 'nama' => 'Americano',         'deskripsi' => 'Espresso klasik dengan air mineral',  'harga' => 20000, 'kategori' => 'Kopi',     'gambar' => 'assets/img/kopi.png'],
-    ['id' => 5, 'nama' => 'Cappuccino',        'deskripsi' => 'Espresso dengan busa susu lembut',    'harga' => 26000, 'kategori' => 'Kopi',     'gambar' => 'assets/img/kopi.png'],
-    ['id' => 6, 'nama' => 'Matcha Oat Latte',  'deskripsi' => 'Matcha premium dengan susu oat',      'harga' => 29000, 'kategori' => 'Non-Kopi', 'gambar' => 'assets/img/kopi.png'],
-];
-
-$kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
+$outlet   = $outlet ?? 'TOMORO Coffee GC';
+$produk   = $produk ?? [];
+$kategori = $kategori ?? ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -31,11 +22,9 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <!-- Global stylesheet (Tomoro Theme) -->
     <link href="assets/css/style.css" rel="stylesheet">
 
     <style>
-        /* ---------- Penyesuaian khusus UI-003 ---------- */
         body.mobile-viewport-body {
             background: #ffffff;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -47,8 +36,6 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
             min-height: 876px;
             box-shadow: 0 40px 70px rgba(0, 0, 0, .55);
         }
-
-        /* Badge UI-003 */
         .badge-ui {
             letter-spacing: 2px;
             border: 1.5px solid #c9ccd1;
@@ -58,8 +45,6 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
             padding: 3px 8px;
             color: #6b7280;
         }
-
-        /* Header outlet */
         .btn-back {
             width: 36px; height: 36px;
             border: 1px solid #e3e5e8;
@@ -83,8 +68,6 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
             line-height: 1;
         }
         .btn-ganti-outlet:hover { background: var(--tomoro-orange-light); color: var(--tomoro-orange); }
-
-        /* Search */
         .search-box {
             display: flex; align-items: center; gap: 10px;
             border: 1px solid #e3e5e8;
@@ -99,9 +82,6 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
             border: 0; outline: 0; width: 100%;
             font-size: .88rem; color: #1f242d; background: transparent;
         }
-        .search-box input::placeholder { color: #8c8c8c; }
-
-        /* Kategori pill */
         .kategori-scroll {
             display: flex; gap: 10px;
             overflow-x: auto;
@@ -129,8 +109,6 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
             font-weight: 700;
             padding: 9px 16px;
         }
-
-        /* Kartu produk */
         .menu-list { margin-top: 14px; display: flex; flex-direction: column; gap: 14px; }
         .card-produk {
             display: flex; align-items: center; gap: 14px;
@@ -159,10 +137,10 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
             color: #fff; font-size: 1.15rem;
             display: flex; align-items: center; justify-content: center;
             padding: 0;
+            text-decoration: none;
             transition: background-color .15s ease, transform .15s ease;
         }
-        .btn-tambah:hover { background: var(--tomoro-orange-hover); transform: scale(1.06); }
-
+        .btn-tambah:hover { background: var(--tomoro-orange-hover); transform: scale(1.06); color: #fff; }
         .menu-kosong { display: none; text-align: center; color: #8c8c8c; font-size: .85rem; padding: 30px 0; }
     </style>
 </head>
@@ -170,13 +148,14 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
 <body class="mobile-viewport-body">
 <div class="mobile-frame katalog-frame">
 
-    <!-- Badge kode UI -->
-    <span class="badge-ui">UI-003</span>
+    <div class="d-flex justify-content-between align-items-center">
+        <span class="badge-ui">UI-003</span>
+        <a href="index.php?page=menu-tambah" class="btn btn-sm btn-outline-danger py-0 px-2 fw-bold" style="font-size: 0.75rem;">+ Tambah Menu Baru</a>
+    </div>
 
-    <!-- Header: tombol kembali, outlet terpilih, ganti outlet -->
     <div class="d-flex align-items-center justify-content-between mt-3">
         <div class="d-flex align-items-center gap-3">
-            <a href="index.php?page=home" class="btn-back" aria-label="Kembali">
+            <a href="index.php" class="btn-back" aria-label="Kembali">
                 <i class="bi bi-chevron-left"></i>
             </a>
             <div>
@@ -184,16 +163,14 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
                 <div class="outlet-name"><?= htmlspecialchars($outlet) ?></div>
             </div>
         </div>
-        <a href="index.php?page=outlet" class="btn-ganti-outlet">Ganti Outlet</a>
+        <a href="index.php" class="btn-ganti-outlet">Ganti Outlet</a>
     </div>
 
-    <!-- Pencarian -->
     <div class="search-box">
         <i class="bi bi-search"></i>
         <input type="text" id="cariMenu" placeholder="Cari kopi favoritmu" autocomplete="off">
     </div>
 
-    <!-- Tab kategori -->
     <div class="kategori-scroll" id="kategoriTab">
         <?php foreach ($kategori as $i => $k): ?>
             <button type="button"
@@ -202,7 +179,6 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
         <?php endforeach; ?>
     </div>
 
-    <!-- Daftar produk -->
     <div class="menu-list" id="menuList">
         <?php foreach ($produk as $p): ?>
             <div class="card-produk"
@@ -218,11 +194,10 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
                     <p class="produk-desc"><?= htmlspecialchars($p['deskripsi']) ?></p>
                     <p class="produk-harga">Rp<?= number_format($p['harga'], 0, ',', '.') ?></p>
                 </div>
-                <button type="button" class="btn-tambah btn-tambah-produk"
-                        data-id="<?= (int)$p['id'] ?>"
-                        aria-label="Tambah <?= htmlspecialchars($p['nama']) ?>">
-                    <i class="bi bi-plus-lg"></i>
-                </button>
+                <a href="index.php?page=menu-edit&id=<?= (int)$p['id'] ?>" class="btn-tambah"
+                   title="Edit Menu <?= htmlspecialchars($p['nama']) ?>">
+                    <i class="bi bi-pencil-square" style="font-size: 0.95rem;"></i>
+                </a>
             </div>
         <?php endforeach; ?>
         <div class="menu-kosong" id="menuKosong">Menu tidak ditemukan</div>
@@ -231,7 +206,6 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
 </div>
 
 <script>
-    // Filter kategori + pencarian real-time
     (function () {
         const input = document.getElementById('cariMenu');
         const tabs  = document.querySelectorAll('.pill-kategori');
@@ -259,17 +233,8 @@ $kategori = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
             kategoriAktif = t.dataset.kategori;
             terapkanFilter();
         }));
-
-        // Hook tombol "+" -> nanti dihubungkan ke modal kustomisasi add-on / aksi tambah keranjang
-        document.querySelectorAll('.btn-tambah-produk').forEach(b => {
-            b.addEventListener('click', () => {
-                const idProduk = b.dataset.id;
-                // TODO: buka modal kustomisasi (ukuran, es, gula, topping)
-                // lalu POST ke index.php?page=keranjang&aksi=tambah dengan id_produk = idProduk
-                console.log('Tambah produk id:', idProduk);
-            });
-        });
     })();
 </script>
 </body>
 </html>
+
