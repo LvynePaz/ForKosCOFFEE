@@ -9,6 +9,7 @@
  * @var array  $kategori
  */
 $outlet   = $outlet ?? 'TOMORO Coffee GC';
+$outletId = $outletId ?? 'gc';
 $produk   = $produk ?? [];
 $kategori = $kategori ?? ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
 ?>
@@ -25,16 +26,36 @@ $kategori = $kategori ?? ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
     <link href="assets/css/style.css" rel="stylesheet">
 
     <style>
-        body.mobile-viewport-body {
-            background: #ffffff;
+        body.catalog-body {
+            padding-bottom: 76px;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            align-items: flex-start;
         }
-        .mobile-frame.katalog-frame {
-            border-radius: 0;
-            padding: 24px 20px 20px;
-            min-height: 876px;
-            box-shadow: 0 40px 70px rgba(0, 0, 0, .55);
+        .catalog-page {
+            width: 100%;
+            max-width: 1320px;
+            margin-inline: auto;
+        }
+        .catalog-title {
+            color: #1f242d;
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 800;
+        }
+        .catalog-subtitle {
+            max-width: 620px;
+            margin: 0 auto;
+            color: #6c757d;
+        }
+        .catalog-outlet {
+            width: min(100%, 760px);
+            margin: 0 auto;
+            padding: 16px 18px;
+            border: 1px solid #ececec;
+            border-radius: 16px;
+            background: #fff;
+        }
+        .catalog-search-wrap {
+            width: min(100%, 760px);
+            margin: 22px auto 0;
         }
         .badge-ui {
             letter-spacing: 2px;
@@ -75,7 +96,7 @@ $kategori = $kategori ?? ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
             padding: 0 14px;
             height: 44px;
             background: #fff;
-            margin-top: 20px;
+            margin-top: 0;
         }
         .search-box i { font-size: 1.05rem; color: #1f242d; }
         .search-box input {
@@ -85,8 +106,9 @@ $kategori = $kategori ?? ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
         .kategori-scroll {
             display: flex; gap: 10px;
             overflow-x: auto;
-            margin: 14px -20px 0 0;
-            padding: 4px 20px 4px 0;
+            justify-content: center;
+            margin: 18px auto 0;
+            padding: 4px 2px 8px;
             scrollbar-width: none;
         }
         .kategori-scroll::-webkit-scrollbar { display: none; }
@@ -109,26 +131,42 @@ $kategori = $kategori ?? ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
             font-weight: 700;
             padding: 9px 16px;
         }
-        .menu-list { margin-top: 14px; display: flex; flex-direction: column; gap: 14px; }
+        .menu-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
         .card-produk {
             display: flex; align-items: center; gap: 14px;
-            padding: 10px 14px 10px 10px;
+            min-width: 0;
+            padding: 14px;
             background: #fff;
             border: 1px solid #ececec;
-            border-radius: 18px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
+            transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+        }
+        .card-produk:hover {
+            border-color: var(--tomoro-orange-border);
+            box-shadow: 0 8px 22px rgba(31, 36, 45, .08);
+            transform: translateY(-2px);
         }
         .produk-img {
-            width: 82px; height: 82px; flex: 0 0 82px;
+            width: 76px; height: 76px; flex: 0 0 76px;
             border-radius: 14px;
-            background: #f5f5f6;
+            background: var(--tomoro-orange-light);
             overflow: hidden;
             display: flex; align-items: center; justify-content: center;
+            color: var(--tomoro-orange);
+            font-size: 1.8rem;
         }
         .produk-img img { width: 100%; height: 100%; object-fit: cover; }
+        .produk-img img[hidden] { display: none; }
+        .produk-img i[hidden] { display: none; }
         .produk-info { flex: 1; min-width: 0; }
-        .produk-nama  { font-size: 1.05rem; font-weight: 700; color: #111; margin: 0 0 4px; line-height: 1.2; }
-        .produk-desc  { font-size: .68rem; color: #6c757d; margin: 0 0 8px; line-height: 1.3; }
+        .produk-nama  { font-size: .98rem; font-weight: 700; color: #111; margin: 0 0 4px; line-height: 1.3; overflow-wrap: anywhere; }
+        .produk-desc  { font-size: .76rem; color: #6c757d; margin: 0 0 8px; line-height: 1.45; }
         .produk-harga { font-size: 1rem; font-weight: 800; color: var(--tomoro-orange); margin: 0; line-height: 1; }
         .btn-tambah {
             width: 32px; height: 32px; flex: 0 0 32px;
@@ -141,34 +179,71 @@ $kategori = $kategori ?? ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
             transition: background-color .15s ease, transform .15s ease;
         }
         .btn-tambah:hover { background: var(--tomoro-orange-hover); transform: scale(1.06); color: #fff; }
-        .menu-kosong { display: none; text-align: center; color: #8c8c8c; font-size: .85rem; padding: 30px 0; }
+        .btn-tambah:focus-visible { outline: 3px solid rgba(250, 90, 0, .3); outline-offset: 3px; }
+        .menu-kosong { display: none; grid-column: 1 / -1; text-align: center; color: #8c8c8c; font-size: .9rem; padding: 30px 0; }
+        @media (max-width: 575.98px) {
+            .catalog-outlet { padding: 14px; }
+            .kategori-scroll { justify-content: flex-start; margin-left: -16px; margin-right: -16px; padding: 4px 16px 8px; }
+            .menu-list { gap: 12px; margin-top: 18px; }
+            .card-produk { gap: 11px; padding: 11px; }
+            .produk-img { width: 64px; height: 64px; flex-basis: 64px; }
+            .produk-nama { font-size: .9rem; }
+            .produk-desc { font-size: .7rem; }
+        }
     </style>
 </head>
 
-<body class="mobile-viewport-body">
-<div class="mobile-frame katalog-frame">
-
-    <div class="d-flex justify-content-between align-items-center">
-        <span class="badge-ui">UI-003</span>
-        <a href="index.php?page=menu-tambah" class="btn btn-sm btn-outline-danger py-0 px-2 fw-bold" style="font-size: 0.75rem;">+ Tambah Menu Baru</a>
-    </div>
-
-    <div class="d-flex align-items-center justify-content-between mt-3">
-        <div class="d-flex align-items-center gap-3">
-            <a href="index.php" class="btn-back" aria-label="Kembali">
-                <i class="bi bi-chevron-left"></i>
-            </a>
-            <div>
-                <div class="outlet-label">Outlet pilihan</div>
-                <div class="outlet-name"><?= htmlspecialchars($outlet) ?></div>
-            </div>
+<body class="app-body catalog-body">
+<nav class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top py-2">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
+            <div class="brand-mini-icon"><i class="bi bi-cup-hot-fill text-white"></i></div>
+            <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
+        </a>
+        <div class="d-none d-md-flex align-items-center gap-3">
+            <a href="index.php?page=home" class="nav-link text-dark fw-semibold">Home</a>
+            <a href="index.php?page=katalog" class="nav-link active fw-bold text-orange">Katalog Menu</a>
+            <a href="index.php?page=voucher" class="nav-link text-dark fw-semibold">Voucher</a>
+            <a href="index.php?page=pesanan" class="nav-link text-dark fw-semibold">Pesanan</a>
         </div>
-        <a href="index.php" class="btn-ganti-outlet">Ganti Outlet</a>
+        <span class="badge-ui d-md-none">UI-003</span>
     </div>
+</nav>
 
-    <div class="search-box">
+<main class="container py-3 py-md-4 catalog-page">
+    <header class="text-center mb-4 mb-md-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="badge-ui d-none d-md-inline-block">UI-003</span>
+            <span class="d-md-none"></span>
+            <a href="index.php?page=menu-tambah" class="btn btn-sm btn-outline-tomoro rounded-pill px-3 fw-bold">
+                <i class="bi bi-plus-lg me-1"></i>Tambah Menu
+            </a>
+        </div>
+        <h1 class="catalog-title mb-2">Pilih Menu Favoritmu</h1>
+        <p class="catalog-subtitle mb-0">Temukan kopi dan minuman favoritmu, dibuat segar untuk menemani harimu.</p>
+    </header>
+
+    <section class="catalog-outlet" aria-label="Outlet pilihan">
+        <div class="d-flex align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-3 min-w-0">
+                <div class="icon-pin-box flex-shrink-0">
+                    <i class="bi bi-geo-alt-fill text-orange"></i>
+                </div>
+                <div class="min-w-0">
+                    <div class="outlet-label">Outlet pilihan</div>
+                    <div class="outlet-name"><?= htmlspecialchars($outlet) ?></div>
+                </div>
+            </div>
+            <a href="index.php?page=home" class="btn-ganti-outlet flex-shrink-0">Ganti Outlet</a>
+        </div>
+    </section>
+
+    <div class="catalog-search-wrap">
+        <label class="visually-hidden" for="cariMenu">Cari menu</label>
+        <div class="search-box">
         <i class="bi bi-search"></i>
         <input type="text" id="cariMenu" placeholder="Cari kopi favoritmu" autocomplete="off">
+        </div>
     </div>
 
     <div class="kategori-scroll" id="kategoriTab">
@@ -185,24 +260,38 @@ $kategori = $kategori ?? ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
                  data-nama="<?= htmlspecialchars(strtolower($p['nama'])) ?>"
                  data-kategori="<?= htmlspecialchars($p['kategori']) ?>">
                 <div class="produk-img">
-                    <img src="<?= htmlspecialchars($p['gambar']) ?>"
-                         alt="<?= htmlspecialchars($p['nama']) ?>"
-                         onerror="this.style.display='none'">
-                </div>
+                     <?php if (!empty($p['gambar']) && is_file(dirname(__DIR__, 2) . '/' . ltrim($p['gambar'], '/\\'))): ?>
+                         <img src="<?= htmlspecialchars($p['gambar']) ?>"
+                              alt="<?= htmlspecialchars($p['nama']) ?>"
+                              onerror="this.hidden=true; this.nextElementSibling.hidden=false">
+                         <i class="bi bi-cup-hot-fill" aria-hidden="true" hidden></i>
+                     <?php else: ?>
+                         <i class="bi bi-cup-hot-fill" aria-hidden="true"></i>
+                     <?php endif; ?>
+                 </div>
                 <div class="produk-info">
                     <h6 class="produk-nama"><?= htmlspecialchars($p['nama']) ?></h6>
                     <p class="produk-desc"><?= htmlspecialchars($p['deskripsi']) ?></p>
                     <p class="produk-harga">Rp<?= number_format($p['harga'], 0, ',', '.') ?></p>
                 </div>
-                <a href="index.php?page=menu-edit&id=<?= (int)$p['id'] ?>" class="btn-tambah"
-                   title="Edit Menu <?= htmlspecialchars($p['nama']) ?>">
-                    <i class="bi bi-pencil-square" style="font-size: 0.95rem;"></i>
+                <a href="index.php?page=checkout&amp;id=<?= (int)$p['id'] ?>&amp;outlet=<?= urlencode($outletId) ?>" class="btn-tambah"
+                   title="Pilih <?= htmlspecialchars($p['nama']) ?>" aria-label="Pilih <?= htmlspecialchars($p['nama']) ?>">
+                    <i class="bi bi-bag-plus" style="font-size: 0.95rem;"></i>
                 </a>
             </div>
         <?php endforeach; ?>
         <div class="menu-kosong" id="menuKosong">Menu tidak ditemukan</div>
     </div>
-
+</main>
+<div class="mobile-bottom-nav d-md-none">
+    <a href="index.php?page=home" class="nav-bottom-item text-decoration-none">
+        <i class="bi bi-house-door-fill"></i>
+        <span>Home</span>
+    </a>
+    <a href="index.php?page=pesanan" class="nav-bottom-item text-decoration-none">
+        <i class="bi bi-bag"></i>
+        <span>Pesanan</span>
+    </a>
 </div>
 
 <script>
@@ -237,4 +326,3 @@ $kategori = $kategori ?? ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
 </script>
 </body>
 </html>
-
