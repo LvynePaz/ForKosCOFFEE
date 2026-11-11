@@ -1,32 +1,14 @@
 <?php
-session_start();
-$title = "Login - ForKos Coffee";
-$message = "";
-
-// Jika sudah ada sesi aktif, langsung arahkan ke Home
-if (isset($_SESSION['user_phone'])) {
-    header("Location: index.php");
-    exit;
-}
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $phone = trim($_POST["phone"] ?? "");
-    $otpArray = $_POST["otp"] ?? [];
-    $otp = implode("", $otpArray);
-
-    if (empty($phone)) {
-        $message = "Nomor telepon wajib diisi.";
-    } elseif (strlen($otp) < 6) {
-        $message = "Kode OTP harus 6 digit lengkap.";
-    } else {
-        // Set sesi login sesuai SDD UI-002
-        $_SESSION['user_phone'] = $phone;
-        $_SESSION['user_name']  = "Cikocut";
-        $_SESSION['user_id']    = 1;
-        header("Location: index.php");
-        exit;
-    }
-}
+/**
+ * View: Halaman Login & Verifikasi OTP (UI-001)
+ * Arsitektur: MVC - View Layer (Flat View)
+ * Dokumen SDD: Bab 5.2.1 (UI-001)
+ * 
+ * @var string $title
+ * @var string $message
+ */
+$title   = $title ?? 'Login - ForKos Coffee';
+$message = $message ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -34,11 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($title) ?></title>
-    <!-- Google Font Inter / System Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
     <style>
         * {
             box-sizing: border-box;
@@ -56,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             padding: 24px 12px;
         }
 
-        /* Bingkai Ponsel (Canvas Mockup) */
         .phone-mockup {
             width: 100%;
             max-width: 380px;
@@ -67,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             position: relative;
         }
 
-        /* Badge UI-001 */
         .badge-ui {
             display: inline-block;
             border: 1px solid #d1d5db;
@@ -79,7 +57,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             margin-bottom: 24px;
         }
 
-        /* Logo Brand Oranye Tomoro */
         .brand-header {
             text-align: center;
             margin-bottom: 28px;
@@ -122,7 +99,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             font-weight: 500;
         }
 
-        /* Form Labels */
         .input-label {
             display: block;
             font-size: 13px;
@@ -131,7 +107,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             margin-bottom: 8px;
         }
 
-        /* Input Grup Telepon */
         .phone-group {
             display: flex;
             align-items: center;
@@ -168,7 +143,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             background: transparent;
         }
 
-        /* Tombol Kirim OTP */
         .btn-kirim-otp {
             width: 100%;
             height: 48px;
@@ -189,7 +163,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             transform: translateY(-1px);
         }
 
-        /* Container 6 Kotak OTP */
         .otp-section {
             margin-top: 24px;
             margin-bottom: 24px;
@@ -220,7 +193,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             box-shadow: 0 0 0 3px rgba(250, 90, 0, 0.12);
         }
 
-        /* Tombol Verifikasi */
         .btn-verifikasi {
             width: 100%;
             height: 48px;
@@ -238,7 +210,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             background-color: #000000;
         }
 
-        /* Teks Validasi Footer */
         .footer-caption {
             text-align: center;
             font-size: 11px;
@@ -247,7 +218,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             font-weight: 500;
         }
 
-        /* Alert Error */
         .alert-error {
             background-color: #fef2f2;
             border: 1px solid #fee2e2;
@@ -263,15 +233,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 
     <div class="phone-mockup">
-        <!-- Label UI-001 -->
         <div>
             <span class="badge-ui">UI-001</span>
         </div>
 
-        <!-- Logo & Judul -->
         <div class="brand-header">
             <div class="brand-icon-box">
-                <!-- SVG Cangkir Kopi Persis Figma -->
                 <svg viewBox="0 0 24 24">
                     <path d="M2 19h18v2H2v-2zm16-14h-1V3H3v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h1c1.66 0 3-1.34 3-3s-1.34-3-3-3zm-3 8c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V5h10v6zm3-3h-1V5h1c.55 0 1 .45 1 1s-.45 1-1 1z"/>
                 </svg>
@@ -286,9 +253,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         <?php endif; ?>
 
-        <!-- Form Autentikasi -->
-        <form method="POST" action="">
-            <!-- Input Telepon -->
+        <form method="POST" action="index.php?page=login">
             <div>
                 <label class="input-label">Nomor telepon</label>
                 <div class="phone-group">
@@ -298,7 +263,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <button type="button" class="btn-kirim-otp">Kirim OTP</button>
             </div>
 
-            <!-- Input 6 Digit OTP Berjejer ke Samping -->
             <div class="otp-section">
                 <label class="input-label">Masukkan kode OTP</label>
                 <div class="otp-container">
@@ -311,13 +275,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
             </div>
 
-            <!-- Tombol Verifikasi & Status -->
             <button type="submit" class="btn-verifikasi">Verifikasi</button>
             <p class="footer-caption">Validasi Berhasil setelah verifikasi</p>
+            <div class="text-center mt-3">
+                <a href="index.php" class="text-muted small text-decoration-none">Kembali ke Home</a>
+            </div>
         </form>
     </div>
 
-    <!-- Script Interaktif Auto-focus ke Kotak Berikutnya -->
     <script>
         const otpInputs = document.querySelectorAll('.otp-box');
         otpInputs.forEach((input, index) => {
@@ -335,3 +300,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </script>
 </body>
 </html>
+
