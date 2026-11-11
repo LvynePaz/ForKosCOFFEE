@@ -15,6 +15,7 @@ require_once __DIR__ . '/app/controllers/KatalogController.php';
 require_once __DIR__ . '/app/controllers/MenuController.php';
 require_once __DIR__ . '/app/controllers/OrderController.php';
 require_once __DIR__ . '/app/controllers/VoucherController.php';
+require_once __DIR__ . '/app/controllers/CheckoutController.php';
 
 // Tangkap parameter rute halaman
 $page   = $_GET['page'] ?? 'home';
@@ -71,6 +72,16 @@ switch ($page) {
     case 'pesanan':
         $controller = new OrderController();
         $controller->index();
+        break;
+
+    case 'checkout':
+        $controller = new CheckoutController();
+        $controller->index();
+        break;
+
+    case 'pelacakan':
+        $controller = new OrderController();
+        $controller->tracking();
         break;
 
     case 'voucher':
