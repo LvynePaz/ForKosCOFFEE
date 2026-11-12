@@ -12,7 +12,7 @@ $host    = 'localhost';
 $port    = '3306';
 $db      = 'forkos_coffee';
 $user    = 'root';
-$pass    = 'Fatim0201';
+$pass    = '';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host={$host};port={$port};dbname={$db};charset={$charset}";

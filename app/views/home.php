@@ -146,7 +146,7 @@ $userName = $_SESSION['user_name'] ?? 'Cikocut';
                                     <i class="bi bi-geo-alt-fill text-orange fs-4"></i>
                                 </div>
                                 <div>
-                                    <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">TOMORO Coffee GC</span>
+                                    <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">ForKos Coffee GC</span>
                                     <span class="d-block text-muted small">Jl. Grand City Balikpapan No.2</span>
                                     <span class="d-block text-muted small mt-1"><strong>0.4 km</strong> &bull; Buka 24 JAM &bull; Est. 8-12 menit</span>
                                 </div>
@@ -163,7 +163,7 @@ $userName = $_SESSION['user_name'] ?? 'Cikocut';
                                     <i class="bi bi-geo-alt-fill text-orange fs-4"></i>
                                 </div>
                                 <div>
-                                    <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">TOMORO Coffee Batu Ampar</span>
+                                    <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">ForKos Coffee Batu Ampar</span>
                                     <span class="d-block text-muted small">Jl. Bangka IX No. 24, Balikpapan</span>
                                     <span class="d-block text-muted small mt-1"><strong>0.8 km</strong> &bull; Buka 24 JAM &bull; Est. 10-15 menit</span>
                                 </div>

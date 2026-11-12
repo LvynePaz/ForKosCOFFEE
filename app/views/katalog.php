@@ -8,7 +8,7 @@
  * @var array  $produk
  * @var array  $kategori
  */
-$outlet   = $outlet ?? 'TOMORO Coffee GC';
+$outlet   = $outlet ?? 'ForKos Coffee GC';
 $outletId = $outletId ?? 'gc';
 $produk   = $produk ?? [];
 $kategori = $kategori ?? ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
