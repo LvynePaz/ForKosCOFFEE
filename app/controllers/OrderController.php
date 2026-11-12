@@ -19,7 +19,7 @@ class OrderController {
      */
     public function index(): void {
         $orderData = [
-            'id_pesanan'       => 'TMR-240217-0832',
+            'id_pesanan'       => 'FKS-240217-0832',
             'outlet'           => 'ForKos GC',
             'status'           => 'Sedang Dibuat',
             'estimasi'         => 'Barista sedang meracik kopimu',
@@ -78,7 +78,7 @@ class OrderController {
                 'batu_ampar' => 'TOMORO Coffee Batu Ampar'
             ];
             $_SESSION['active_order'] = [
-                'id_pesanan' => 'TMR-' . date('ymd') . '-' . random_int(1000, 9999),
+                'id_pesanan' => 'FKS-' . date('ymd') . '-' . random_int(1000, 9999),
                 'outlet' => $outlets[$outletId],
                 'status' => 'Sedang Dibuat',
                 'estimasi' => 'Barista sedang meracik pesananmu',
@@ -97,8 +97,8 @@ class OrderController {
         }
 
         $order = $_SESSION['active_order'] ?? [
-            'id_pesanan' => 'TMR-240217-0832',
-            'outlet' => 'TOMORO Coffee GC',
+            'id_pesanan' => 'FKS-240217-0832',
+            'outlet' => 'ForKos Coffee GC',
             'status' => 'Sedang Dibuat',
             'estimasi' => 'Barista sedang meracik kopimu',
             'pick_up_code' => 'A 127',

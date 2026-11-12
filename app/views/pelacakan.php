@@ -1,6 +1,6 @@
 <?php
 $order = $order ?? [
-    'id_pesanan'   => 'TMR-240217-0832',
+    'id_pesanan'   => 'FKS-240217-0832',
     'outlet'       => 'ForKos GC',
     'status'       => 'Sedang Dibuat',
     'estimasi'     => 'Barista sedang meracik kopimu',

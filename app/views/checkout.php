@@ -1,6 +1,6 @@
 <?php
 $item = $item ?? ['id' => 1, 'nama' => 'Caramel Macchiato', 'harga' => 28000];
-$outlet = $outlet ?? 'TOMORO Coffee GC';
+$outlet = $outlet ?? 'ForKos Coffee GC';
 $outletId = $outletId ?? 'gc';
 ?>
 <!DOCTYPE html>
