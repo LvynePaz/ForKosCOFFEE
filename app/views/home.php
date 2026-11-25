@@ -168,6 +168,7 @@ $userName =$_SESSION['user_name'] ?? 'Cikocut';
                                 </div>
                                 <div>
                                     <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">ForKos Coffee Batu Ampar</span>
+                                    <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">ForKos Coffee Batu Ampar</span>
                                     <span class="d-block text-muted small">Jl. Bangka IX No. 24, Balikpapan</span>
                                     <span class="d-block text-muted small mt-1"><strong>0.8 km</strong> &bull; Buka 24 JAM &bull; Est. 10-15 menit</span>
                                 </div>

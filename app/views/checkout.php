@@ -68,7 +68,7 @@ $outletId = $outletId ?? 'gc';
             padding: 14px 18px;
             border-radius: 20px;
             background: #fff5ef;
-            color: var(--tomoro-orange);
+            color: var(--ForKos-orange);
         }
         .pickup-card i { font-size: 1.35rem; }
         .pickup-label {
@@ -124,7 +124,7 @@ $outletId = $outletId ?? 'gc';
         .edit-item {
             display: inline-block;
             margin-top: 6px;
-            color: var(--tomoro-orange);
+            color: var(--ForKos-orange);
             font-size: .78rem;
             font-weight: 700;
             text-decoration: none;
@@ -154,14 +154,14 @@ $outletId = $outletId ?? 'gc';
             justify-content: space-between;
             margin-top: 16px;
             padding: 16px;
-            border: 1.5px dashed var(--tomoro-orange);
+            border: 1.5px dashed var(--ForKos-orange);
             border-radius: 18px;
             background: #fff;
             text-align: left;
         }
         .voucher-title {
             display: block;
-            color: var(--tomoro-orange);
+            color: var(--ForKos-orange);
             font-size: .95rem;
             font-weight: 700;
         }
@@ -189,7 +189,7 @@ $outletId = $outletId ?? 'gc';
             color: #171717;
             cursor: pointer;
         }
-        .payment-option.selected { border: 1.5px solid var(--tomoro-orange); }
+        .payment-option.selected { border: 1.5px solid var(--ForKos-orange); }
         .payment-option > i { font-size: 1.2rem; }
         .payment-option span {
             flex: 1;
@@ -202,7 +202,7 @@ $outletId = $outletId ?? 'gc';
             height: 16px;
             flex: 0 0 16px;
             margin: 0;
-            accent-color: var(--tomoro-orange);
+            accent-color: var(--ForKos-orange);
         }
         .payment-summary {
             margin-top: 22px;
@@ -224,7 +224,7 @@ $outletId = $outletId ?? 'gc';
             font-size: 1.05rem;
         }
         .summary-total strong {
-            color: var(--tomoro-orange);
+            color: var(--ForKos-orange);
             font-size: 1.2rem;
         }
         .checkout-action {
@@ -249,7 +249,7 @@ $outletId = $outletId ?? 'gc';
         }
         .pay-button:hover,
         .pay-button:focus-visible {
-            background: var(--tomoro-orange-hover);
+            background: var(--ForKos-orange-hover);
             color: #fff;
         }
         @media (max-width: 380px) {

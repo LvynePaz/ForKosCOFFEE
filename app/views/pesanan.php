@@ -65,13 +65,8 @@ $itemPrice  = $order['total_harga'] ?? 28000;
             width: 2px;
             background-color: #e5e7eb;
         }
-
-        .tracking-step:last-child::before {
-            display: none;
-        }
-
-        .tracking-step.done::before {
-            background-color: #fa5a00;
+        .stepper-item.completed:not(:last-child)::before {
+            background-color: var(--tomoro-orange, #fa5a00);
         }
 
         .step-circle {
@@ -89,14 +84,12 @@ $itemPrice  = $order['total_harga'] ?? 28000;
             background-color: #e5e7eb;
             color: #6b7280;
         }
-
-        .tracking-step.done .step-circle {
-            background-color: #fa5a00;
+        .stepper-item.active .stepper-dot {
+            background-color: var(--tomoro-orange, #fa5a00);
             color: #ffffff;
         }
-
-        .tracking-step.active .step-circle {
-            background-color: #fa5a00;
+        .stepper-item.completed .stepper-dot {
+            background-color: var(--tomoro-orange, #fa5a00);
             color: #ffffff;
             box-shadow: 0 0 0 6px rgba(250, 90, 0, 0.18);
         }

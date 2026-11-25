@@ -43,7 +43,7 @@ $oldInput     = $oldInput ?? ['name' => '', 'category' => '', 'price' => '', 'st
         }
 
         .btn-coffee-submit {
-            background-color: var(--tomoro-orange, #fa5a00);
+            background-color: var(--ForKos-orange, #fa5a00);
             color: #ffffff;
             border: none;
             border-radius: 14px;
@@ -54,7 +54,7 @@ $oldInput     = $oldInput ?? ['name' => '', 'category' => '', 'price' => '', 'st
         }
 
         .btn-coffee-submit:hover {
-            background-color: var(--tomoro-orange-hover, #e04e00);
+            background-color: var(--ForKos-orange-hover, #e04e00);
             color: #ffffff;
         }
 
@@ -66,7 +66,7 @@ $oldInput     = $oldInput ?? ['name' => '', 'category' => '', 'price' => '', 'st
         }
 
         .form-control:focus, .form-select:focus {
-            border-color: var(--tomoro-orange, #fa5a00);
+            border-color: var(--ForKos-orange, #fa5a00);
             box-shadow: 0 0 0 0.2rem rgba(250, 90, 0, 0.15);
         }
 

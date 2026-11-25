@@ -17,7 +17,6 @@ class Database {
     public static function getConnection(): PDO {
         if (self::$connection === null) {
             $localConfig = dirname(__DIR__, 2) . '/config/database.php';
-            $exampleConfig = dirname(__DIR__, 2) . '/config/database.example.php';
 
             if (file_exists($localConfig)) {
                 require $localConfig;

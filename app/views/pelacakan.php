@@ -158,13 +158,13 @@ $outletId = $order['outlet_id'] ?? 'gc';
             min-height: 205px;
             margin-bottom: 14px;
             border-radius: 18px;
-            border: 1px solid var(--tomoro-orange-border);
-            background: var(--tomoro-orange-light);
-            color: var(--tomoro-dark);
+            border: 1px solid var(--ForKos-orange-border);
+            background: var(--ForKos-orange-light);
+            color: var(--ForKos-dark);
         }
         .pickup-code-label {
             margin-bottom: 8px;
-            color: var(--tomoro-orange);
+            color: var(--ForKos-orange);
             font-size: .62rem;
             font-weight: 800;
             letter-spacing: 2px;
@@ -192,7 +192,7 @@ $outletId = $order['outlet_id'] ?? 'gc';
         }
         .pickup-instruction {
             margin: 7px 0 0;
-            color: var(--tomoro-gray);
+            color: var(--ForKos-gray);
             font-size: .52rem;
         }
         .order-summary {
@@ -215,7 +215,7 @@ $outletId = $order['outlet_id'] ?? 'gc';
         }
         .summary-price {
             margin: 0;
-            color: var(--tomoro-orange);
+            color: var(--ForKos-orange);
             font-size: .68rem;
             font-weight: 700;
         }
@@ -234,7 +234,7 @@ $outletId = $order['outlet_id'] ?? 'gc';
         }
         .home-button:hover,
         .home-button:focus-visible {
-            background: var(--tomoro-orange-hover);
+            background: var(--ForKos-orange-hover);
             color: #fff;
         }
         @media (max-width: 767.98px) {

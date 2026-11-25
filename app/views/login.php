@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         .brand-logo-box-login {
             width: 60px;
             height: 60px;
-            background-color: var(--tomoro-orange, #fa5a00);
+            background-color: var(--ForKos-orange, #fa5a00);
             border-radius: 18px;
             display: flex;
             align-items: center;
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         .brand-title-login span {
-            color: var(--tomoro-orange, #fa5a00);
+            color: var(--ForKos-orange, #fa5a00);
         }
 
         .brand-tagline-login {
@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         .input-group-phone-custom:focus-within {
-            border-color: var(--tomoro-orange, #fa5a00);
+            border-color: var(--ForKos-orange, #fa5a00);
             box-shadow: 0 0 0 3px rgba(250, 90, 0, 0.12);
         }
 
@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         .btn-otp-action {
             width: 100%;
             height: 46px;
-            background-color: var(--tomoro-orange, #fa5a00);
+            background-color: var(--ForKos-orange, #fa5a00);
             color: #ffffff;
             border: none;
             border-radius: 14px;
@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         .btn-otp-action:hover {
-            background-color: var(--tomoro-orange-hover, #e04e00);
+            background-color: var(--ForKos-orange-hover, #e04e00);
             transform: translateY(-1px);
         }
 
@@ -163,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         .otp-digit-box:focus {
-            border-color: var(--tomoro-orange, #fa5a00);
+            border-color: var(--ForKos-orange, #fa5a00);
             box-shadow: 0 0 0 3px rgba(250, 90, 0, 0.12);
         }
 
