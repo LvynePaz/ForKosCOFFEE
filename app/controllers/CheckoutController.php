@@ -14,6 +14,14 @@ class CheckoutController {
     }
 
     public function index(): void {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
+
         $outlets = [
             'gc' => 'ForKos Coffee GC',
             'batu_ampar' => 'ForKos Coffee Batu Ampar'
@@ -21,31 +29,63 @@ class CheckoutController {
         $outletId = $_GET['outlet'] ?? 'gc';
         $outletId = is_string($outletId) && isset($outlets[$outletId]) ? $outletId : 'gc';
 
-        $products = $this->productModel->getCatalog();
-        $productId = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
-        $product = null;
-
-        foreach ($products as $candidate) {
-            if ($productId !== false && $productId !== null && $candidate['id'] === $productId) {
-                $product = $candidate;
-                break;
+        // Jika user klik menu tertentu langsung lewat query ?id=X dan keranjang kosong
+        $singleId = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+        if ($singleId && empty($_SESSION['cart'])) {
+            $catalog = $this->productModel->getCatalog();
+            foreach ($catalog as $item) {
+                if ($item['id'] === $singleId) {
+                    $_SESSION['cart'][$singleId] = [
+                        'id'          => $item['id'],
+                        'nama'        => $item['nama'],
+                        'harga'       => (int)$item['harga'],
+                        'kategori'    => $item['kategori'] ?? 'Kopi',
+                        'gambar'      => $item['gambar'] ?? '',
+                        'quantity'    => 1,
+                        'kustomisasi' => 'Reguler • Gula Normal • Tanpa topping'
+                    ];
+                    break;
+                }
             }
         }
 
-        if ($product === null && !isset($_GET['id'])) {
-            $product = $products[0] ?? null;
+        // Handle kuantitas tambah / kurang lewat action
+        $action = $_GET['action'] ?? '';
+        $targetId = filter_var($_GET['item_id'] ?? null, FILTER_VALIDATE_INT);
+        if ($targetId && isset($_SESSION['cart'][$targetId])) {
+            if ($action === 'inc') {
+                $_SESSION['cart'][$targetId]['quantity'] += 1;
+            } elseif ($action === 'dec') {
+                $_SESSION['cart'][$targetId]['quantity'] -= 1;
+                if ($_SESSION['cart'][$targetId]['quantity'] <= 0) {
+                    unset($_SESSION['cart'][$targetId]);
+                }
+            }
+            header('Location: index.php?page=checkout&outlet=' . urlencode($outletId));
+            exit;
         }
 
-        if ($product === null) {
-            http_response_code(404);
-            echo 'Menu yang dipilih tidak ditemukan.';
-            return;
+        $cart = $_SESSION['cart'];
+        $subtotal = 0;
+        foreach ($cart as $c) {
+            $subtotal += (int)$c['harga'] * (int)$c['quantity'];
         }
+
+        $serviceFee = !empty($cart) ? 2000 : 0;
+        $discount = 0;
+        $total = max(0, $subtotal + $serviceFee - $discount);
+
+        $firstItem = !empty($cart) ? reset($cart) : ['nama' => 'Menu Kopi', 'harga' => 25000];
 
         $this->renderView('checkout', [
-            'item' => $product,
-            'outlet' => $outlets[$outletId],
-            'outletId' => $outletId
+            'item'       => $firstItem,
+            'cart'       => $cart,
+            'subtotal'   => $subtotal,
+            'serviceFee' => $serviceFee,
+            'discount'   => $discount,
+            'total'      => $total,
+            'outlet'     => $outlets[$outletId],
+            'outletId'   => $outletId
         ]);
     }
 

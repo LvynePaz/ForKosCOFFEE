@@ -1,4 +1,5 @@
 <?php
+$userName = $_SESSION['user_name'] ?? 'Cikocut';
 $item = $item ?? ['id' => 1, 'nama' => 'Caramel Macchiato', 'harga' => 28000];
 $outlet = $outlet ?? 'ForKos Coffee GC';
 $outletId = $outletId ?? 'gc';
@@ -35,6 +36,8 @@ $outletId = $outletId ?? 'gc';
             font-weight: 800;
             letter-spacing: 1.5px;
             padding: 5px 9px;
+            display: inline-flex;
+            width: fit-content;
         }
         .checkout-heading {
             display: flex;
@@ -98,15 +101,15 @@ $outletId = $outletId ?? 'gc';
             border-radius: 20px;
         }
         .order-image {
-            width: 84px;
-            height: 84px;
-            flex: 0 0 84px;
+            width: 72px;
+            height: 72px;
+            flex: 0 0 72px;
             display: grid;
             place-items: center;
-            border-radius: 15px;
-            background: #fafafa;
-            color: #aa5a00;
-            font-size: 2.5rem;
+            border-radius: 16px;
+            background: #fff5ef;
+            color: #fa5a00;
+            font-size: 2.2rem;
         }
         .order-info { flex: 1; min-width: 0; }
         .order-name {
@@ -278,31 +281,51 @@ $outletId = $outletId ?? 'gc';
     </style>
 </head>
 <body class="app-body checkout-body">
-<nav class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top py-2">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
-            <div class="brand-mini-icon"><i class="bi bi-cup-hot-fill text-white"></i></div>
-            <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
-        </a>
-        <div class="d-none d-md-flex align-items-center gap-3">
-            <a href="index.php?page=home" class="nav-link text-dark fw-semibold">Home</a>
-            <a href="index.php?page=katalog" class="nav-link text-dark fw-semibold">Katalog Menu</a>
-            <a href="index.php?page=voucher" class="nav-link text-dark fw-semibold">Voucher</a>
-            <a href="index.php?page=pesanan" class="nav-link text-dark fw-semibold">Pesanan</a>
-        </div>
-        <span class="badge-ui d-md-none">UI-004</span>
-    </div>
-</nav>
-<main class="container py-3 py-md-4 checkout-container">
-<section class="checkout-frame bg-white p-3 p-md-4">
-    <span class="badge-ui checkout-badge">UI-004</span>
 
-    <header class="checkout-heading">
-        <a href="index.php?page=katalog&amp;outlet=<?= urlencode($outletId) ?>" class="checkout-back" aria-label="Kembali ke katalog">
-            <i class="bi bi-chevron-left"></i>
-        </a>
-        <h1 class="checkout-title">Keranjang &amp; Checkout</h1>
-    </header>
+    <!-- Top Navbar Seragam -->
+    <nav class="navbar navbar-expand-md navbar-light forkos-navbar sticky-top">
+        <div class="container">
+            <div class="d-flex align-items-center gap-2">
+                <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
+                    <div class="brand-mini-icon">
+                        <i class="bi bi-cup-hot-fill text-white"></i>
+                    </div>
+                    <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
+                </a>
+                <span class="badge-ui">UI-004</span>
+            </div>
+            
+            <!-- Menu Navigasi Desktop -->
+            <div class="d-none d-md-flex align-items-center gap-3">
+                <div class="forkos-nav-links">
+                    <a href="index.php?page=home" class="forkos-nav-link">Home</a>
+                    <a href="index.php?page=katalog" class="forkos-nav-link">Katalog Menu</a>
+                    <a href="index.php?page=voucher" class="forkos-nav-link">Voucher</a>
+                    <a href="index.php?page=pesanan" class="forkos-nav-link">Pesanan</a>
+                </div>
+                <a href="index.php?page=login" class="btn btn-outline-tomoro btn-sm px-3 rounded-pill ms-2">
+                    <i class="bi bi-person-circle me-1"></i> <?= htmlspecialchars($userName) ?>
+                </a>
+            </div>
+
+            <!-- Tampilan Kanan Mobile -->
+            <div class="d-flex d-md-none align-items-center">
+                <a href="index.php?page=login" class="btn btn-sm btn-light rounded-circle p-1">
+                    <i class="bi bi-person-fill text-dark fs-5"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+<main class="container py-3 py-md-4 checkout-container">
+
+    <section class="checkout-frame bg-white p-3 p-md-4">
+        <header class="checkout-heading">
+            <a href="index.php?page=katalog&amp;outlet=<?= urlencode($outletId) ?>" class="checkout-back" aria-label="Kembali ke katalog">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+            <h1 class="checkout-title">Keranjang &amp; Checkout</h1>
+        </header>
 
     <section class="pickup-card" aria-label="Outlet pengambilan">
         <i class="bi bi-geo-alt"></i>
@@ -313,22 +336,48 @@ $outletId = $outletId ?? 'gc';
     </section>
 
     <section class="checkout-order" aria-labelledby="order-heading">
-        <h2 class="checkout-section-title" id="order-heading">Pesanan kamu</h2>
-        <div class="order-card">
-            <div class="order-image" aria-hidden="true">
-                <i class="bi bi-cup-hot-fill"></i>
-            </div>
-            <div class="order-info">
-                <h3 class="order-name"><?= htmlspecialchars($item['nama']) ?></h3>
-                <p class="order-customization">Reguler &bull; Gula Normal<br>Tanpa topping</p>
-                <a class="edit-item" href="index.php?page=katalog&amp;outlet=<?= urlencode($outletId) ?>">Ubah Item</a>
-            </div>
-            <div class="quantity-control" aria-label="Jumlah item">
-                <button class="quantity-button" type="button" id="kurangi" aria-label="Kurangi jumlah">&minus;</button>
-                <span id="jumlah">1</span>
-                <button class="quantity-button" type="button" id="tambah" aria-label="Tambah jumlah">&plus;</button>
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h2 class="checkout-section-title mb-0" id="order-heading">Pesanan kamu</h2>
+            <a href="index.php?page=katalog&amp;outlet=<?= urlencode($outletId) ?>" class="text-orange text-decoration-none small fw-bold">
+                <i class="bi bi-plus-circle me-1"></i>Tambah Menu Lain
+            </a>
         </div>
+
+        <?php if (!empty($cart)): ?>
+            <?php foreach ($cart as $cItem): ?>
+                <div class="order-card mb-2">
+                    <div class="order-image" aria-hidden="true">
+                        <i class="bi bi-cup-hot-fill"></i>
+                    </div>
+                    <div class="order-info">
+                        <h3 class="order-name"><?= htmlspecialchars($cItem['nama']) ?></h3>
+                        <p class="order-customization"><?= htmlspecialchars($cItem['kustomisasi'] ?? 'Reguler • Gula Normal') ?><br><span class="fw-bold text-orange">Rp<?= number_format((int)$cItem['harga'], 0, ',', '.') ?></span></p>
+                        <a class="edit-item text-orange small text-decoration-none" href="index.php?page=katalog&amp;outlet=<?= urlencode($outletId) ?>">Ubah Item</a>
+                    </div>
+                    <div class="quantity-control" aria-label="Jumlah item">
+                        <a href="index.php?page=checkout&amp;action=dec&amp;item_id=<?= (int)$cItem['id'] ?>&amp;outlet=<?= urlencode($outletId) ?>" class="quantity-button text-decoration-none">&minus;</a>
+                        <span><?= (int)$cItem['quantity'] ?></span>
+                        <a href="index.php?page=checkout&amp;action=inc&amp;item_id=<?= (int)$cItem['id'] ?>&amp;outlet=<?= urlencode($outletId) ?>" class="quantity-button text-decoration-none">&plus;</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="order-card">
+                <div class="order-image" aria-hidden="true">
+                    <i class="bi bi-cup-hot-fill"></i>
+                </div>
+                <div class="order-info">
+                    <h3 class="order-name"><?= htmlspecialchars($item['nama']) ?></h3>
+                    <p class="order-customization">Reguler &bull; Gula Normal<br>Tanpa topping</p>
+                    <a class="edit-item" href="index.php?page=katalog&amp;outlet=<?= urlencode($outletId) ?>">Ubah Item</a>
+                </div>
+                <div class="quantity-control" aria-label="Jumlah item">
+                    <button class="quantity-button" type="button" id="kurangi" aria-label="Kurangi jumlah">&minus;</button>
+                    <span id="jumlah">1</span>
+                    <button class="quantity-button" type="button" id="tambah" aria-label="Tambah jumlah">&plus;</button>
+                </div>
+            </div>
+        <?php endif; ?>
     </section>
 
     <button class="voucher-card" type="button">
@@ -364,15 +413,15 @@ $outletId = $outletId ?? 'gc';
         <h2 class="checkout-section-title" id="summary-heading">Ringkasan pembayaran</h2>
         <div class="summary-row">
             <span>Subtotal</span>
-            <strong id="subtotal">Rp<?= number_format((int)$item['harga'], 0, ',', '.') ?></strong>
+            <strong id="subtotal">Rp<?= number_format($subtotal ?? (int)$item['harga'], 0, ',', '.') ?></strong>
         </div>
         <div class="summary-row">
             <span>Biaya layanan</span>
-            <strong>Rp2.000</strong>
+            <strong>Rp<?= number_format($serviceFee ?? 2000, 0, ',', '.') ?></strong>
         </div>
         <div class="summary-row summary-total">
             <span>Total</span>
-            <strong id="total">Rp<?= number_format((int)$item['harga'] + 2000, 0, ',', '.') ?></strong>
+            <strong id="total">Rp<?= number_format($total ?? ((int)$item['harga'] + 2000), 0, ',', '.') ?></strong>
         </div>
     </section>
 
@@ -384,7 +433,7 @@ $outletId = $outletId ?? 'gc';
         </form>
         <button class="pay-button" type="submit" form="checkoutForm">
             <span>Bayar Sekarang</span>
-            <span id="totalTombol">Rp<?= number_format((int)$item['harga'] + 2000, 0, ',', '.') ?></span>
+            <span id="totalTombol">Rp<?= number_format($total ?? ((int)$item['harga'] + 2000), 0, ',', '.') ?></span>
         </button>
     </div>
 </section>

@@ -1,16 +1,26 @@
 <?php
+$userName = $_SESSION['user_name'] ?? 'Cikocut';
 $order = $order ?? [
-    'id_pesanan'   => 'FKS-240217-0832',
+    'id_pesanan'   => 'FKS-240517-0832',
     'outlet'       => 'ForKos GC',
     'status'       => 'Sedang Dibuat',
-    'estimasi'     => 'Barista sedang meracik kopimu',
+    'estimasi'     => 'Barista sedang meracik',
     'pick_up_code' => 'A 127',
     'item_nama'    => 'Caramel Macchiato',
     'kuantitas'    => 1,
-    'kustomisasi'  => 'Reguler, Normal Ice, Less Sugar',
-    'total_harga'  => 28000
+    'kustomisasi'  => 'Reguler • Gula Normal',
+    'total_harga'  => 30000,
+    'items'        => [
+        [
+            'id' => 1,
+            'nama' => 'Caramel Macchiato',
+            'quantity' => 1,
+            'harga' => 28000,
+            'kustomisasi' => 'Reguler • Gula Normal'
+        ]
+    ]
 ];
-$qrContent = $order['id_pesanan'] . '|' . preg_replace('/\s+/', '', $order['pick_up_code']);
+$qrContent = ($order['id_pesanan'] ?? 'FKS-240517-0832') . '|' . preg_replace('/\s+/', '', $order['pick_up_code'] ?? 'A127');
 $outletId = $order['outlet_id'] ?? 'gc';
 ?>
 <!DOCTYPE html>
@@ -23,189 +33,153 @@ $outletId = $order['outlet_id'] ?? 'gc';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     <style>
-        .tracking-frame {
-            width: 100%;
-            max-width: none;
-            margin: 0;
-            display: grid;
-            grid-template-columns: minmax(0, 1fr);
-            align-content: start;
-            gap: 16px;
-            padding: 24px;
-            border-radius: 20px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
-            transition: box-shadow .2s ease;
+        .tracking-container {
+            max-width: 520px;
+            margin: 0 auto;
+            padding-bottom: 80px;
         }
-        .tracking-frame:hover { box-shadow: 0 8px 26px rgba(31, 36, 45, .08); }
-        .tracking-badge,
-        .tracking-header,
-        .order-meta,
-        .order-summary,
-        .home-button,
-        .tracking-nav { grid-column: 1 / -1; }
-        .tracking-steps { grid-column: 1; }
-        .pickup-code-card { grid-column: 1; }
-        .tracking-badge {
-            color: #858585;
-            border-color: #d1d1d1;
-            border-radius: 7px;
-            font-size: .65rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            padding: 3px 7px;
+        .tracking-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 24px 22px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f0f0f0;
         }
-        .tracking-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0 24px;
-        }
-        .tracking-back {
-            width: 32px;
-            height: 32px;
-            flex: 0 0 32px;
+        .tracking-back-btn {
+            width: 38px;
+            height: 38px;
             display: grid;
             place-items: center;
-            border: 1px solid #dedede;
-            border-radius: 10px;
-            color: #171717;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            color: #1f2937;
             text-decoration: none;
+            transition: all .2s;
         }
-        .tracking-title {
-            margin: 0;
-            color: #171717;
-            font-size: 1.05rem;
-            font-weight: 400;
+        .tracking-back-btn:hover {
+            background: #f9fafb;
+            color: #111827;
         }
-        .order-meta {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 24px;
-            padding: 0 12px;
-        }
-        .meta-label {
-            display: block;
-            margin-bottom: 3px;
-            color: #888;
-            font-size: .68rem;
-        }
-        .meta-value {
-            display: block;
-            color: #171717;
-            font-size: .65rem;
-            font-weight: 700;
-        }
-        .tracking-steps {
+
+        /* Stepper matching SDD Gambar 5.6 */
+        .stepper-wrapper {
             position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 0 0 22px;
-            padding: 0;
-            list-style: none;
+            padding-left: 12px;
+            margin: 20px 0 24px;
         }
-        .tracking-steps::before {
-            position: absolute;
-            top: 14px;
-            bottom: 30px;
-            left: 12px;
-            width: 2px;
-            background: #e5e5e5;
-            content: "";
-        }
-        .tracking-step {
-            position: relative;
+        .stepper-row {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            min-height: 32px;
+            position: relative;
+            padding-bottom: 20px;
         }
-        .step-indicator {
-            z-index: 1;
-            width: 24px;
-            height: 24px;
-            flex: 0 0 24px;
+        .stepper-row:last-child {
+            padding-bottom: 0;
+        }
+        .stepper-connector {
+            position: absolute;
+            top: 26px;
+            left: 13px;
+            bottom: 0;
+            width: 2px;
+            background: #e5e7eb;
+        }
+        .stepper-connector.active {
+            background: #fa5a00;
+        }
+        .stepper-icon {
+            z-index: 2;
+            width: 28px;
+            height: 28px;
+            flex: 0 0 28px;
             display: grid;
             place-items: center;
             border-radius: 50%;
-            background: #efefef;
-            color: #171717;
-            font-size: .6rem;
+            font-size: 0.75rem;
             font-weight: 700;
+            background: #f3f4f6;
+            color: #6b7280;
+            border: 1px solid #e5e7eb;
         }
-        .tracking-step.completed .step-indicator,
-        .tracking-step.current .step-indicator {
-            background: #ff6900;
-            color: #fff;
+        .stepper-row.completed .stepper-icon {
+            background: #fa5a00;
+            color: #ffffff;
+            border-color: #fa5a00;
         }
-        .step-name {
-            margin: 3px 0 4px;
-            color: #171717;
-            font-size: .66rem;
+        .stepper-row.current .stepper-icon {
+            background: #fa5a00;
+            color: #ffffff;
+            border-color: #fa5a00;
+            box-shadow: 0 0 0 3px rgba(250, 90, 0, 0.2);
+        }
+        .stepper-text {
+            margin-left: 14px;
+        }
+        .stepper-text h2 {
+            font-size: 0.88rem;
             font-weight: 700;
+            margin: 0 0 2px;
+            color: #111827;
         }
-        .step-detail {
+        .stepper-text p {
+            font-size: 0.76rem;
+            color: #6b7280;
             margin: 0;
-            color: #888;
-            font-size: .63rem;
         }
-        .pickup-code-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 205px;
-            margin-bottom: 14px;
-            border-radius: 18px;
-            border: 1px solid var(--ForKos-orange-border);
-            background: var(--ForKos-orange-light);
-            color: var(--ForKos-dark);
+
+        /* Pick-up Code Card (Dark Card per SDD Gambar 5.6) */
+        .pickup-dark-card {
+            background: #111317;
+            border-radius: 20px;
+            padding: 24px 20px;
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 22px;
         }
-        .pickup-code-label {
-            margin-bottom: 8px;
-            color: var(--ForKos-orange);
-            font-size: .62rem;
+        .pickup-label {
+            color: #fa5a00;
+            font-size: 0.75rem;
             font-weight: 800;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
+            margin-bottom: 6px;
         }
-        .pickup-code {
-            margin-bottom: 8px;
-            font-size: 1.65rem;
-            font-weight: 700;
-            letter-spacing: 5px;
+        .pickup-code-number {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: 4px;
             line-height: 1.1;
+            margin-bottom: 16px;
+            color: #ffffff;
         }
-        .pickup-code-qr {
-            width: 96px;
-            height: 96px;
-            display: grid;
-            place-items: center;
-            border-radius: 8px;
-            background: #fff;
+        .pickup-qr-box {
+            display: inline-block;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 12px;
         }
-        .pickup-code-qr img,
-        .pickup-code-qr canvas {
+        .pickup-qr-box img,
+        .pickup-qr-box canvas {
             display: block;
-            max-width: 88px;
-            max-height: 88px;
+            margin: 0 auto;
         }
-        .pickup-instruction {
-            margin: 7px 0 0;
-            color: var(--ForKos-gray);
-            font-size: .52rem;
+        .pickup-note {
+            color: #9ca3af;
+            font-size: 0.72rem;
+            margin-top: 14px;
+            margin-bottom: 0;
         }
-        .order-summary {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-            padding: 0 2px 12px;
-            border-bottom: 1px solid #eee;
+
+        /* Order items summary */
+        .order-summary-box {
+            background: #fdfdfd;
+            border: 1px solid #f0f0f0;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 22px;
         }
-        .summary-product {
-            margin: 0 0 3px;
-            color: #171717;
-            font-size: .65rem;
+        .btn-home-orange {
+            background: #fa5a00;
+            color: #ffffff;
             font-weight: 700;
         }
         .summary-customization {
@@ -215,26 +189,19 @@ $outletId = $order['outlet_id'] ?? 'gc';
         }
         .summary-price {
             margin: 0;
-            color: var(--ForKos-orange);
+            color: var(--tomoro-orange);
             font-size: .68rem;
             font-weight: 700;
         }
         .home-button {
             display: block;
-            margin: 12px 0 20px;
-            padding: 13px 12px;
-            border-radius: 13px;
-            background: #ff6900;
-            box-shadow: 0 7px 15px rgba(255, 105, 0, .2);
-            color: #fff;
-            font-size: .85rem;
-            font-weight: 700;
+            width: 100%;
             text-align: center;
             text-decoration: none;
         }
         .home-button:hover,
         .home-button:focus-visible {
-            background: var(--ForKos-orange-hover);
+            background: var(--tomoro-orange-hover);
             color: #fff;
         }
         @media (max-width: 767.98px) {
@@ -261,113 +228,181 @@ $outletId = $order['outlet_id'] ?? 'gc';
     </style>
 </head>
 <body class="app-body">
-<nav class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top py-2">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
-            <div class="brand-mini-icon"><i class="bi bi-cup-hot-fill text-white"></i></div>
-            <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
-        </a>
-        <div class="d-none d-md-flex align-items-center gap-3">
-            <a href="index.php?page=home" class="nav-link text-dark fw-semibold">Home</a>
-            <a href="index.php?page=katalog" class="nav-link text-dark fw-semibold">Katalog Menu</a>
-            <a href="index.php?page=voucher" class="nav-link text-dark fw-semibold">Voucher</a>
-            <a href="index.php?page=pesanan" class="nav-link active fw-bold text-orange">Pesanan</a>
-        </div>
-        <span class="badge-ui d-md-none">UI-005</span>
-    </div>
-</nav>
-<main class="container py-3 py-md-4 tracking-container">
-<section class="tracking-frame bg-white">
-    <span class="badge-ui tracking-badge">UI-005</span>
 
-    <header class="tracking-header">
-        <a href="index.php?page=checkout&amp;id=<?= (int)$order['item_id'] ?>&amp;outlet=<?= urlencode($outletId) ?>" class="tracking-back" aria-label="Kembali ke checkout">
-            <i class="bi bi-chevron-left"></i>
-        </a>
-        <h1 class="tracking-title">Detail Pelacakan</h1>
-    </header>
-
-    <section class="order-meta" aria-label="Informasi pesanan">
-        <div>
-            <span class="meta-label">ID Pesanan</span>
-            <span class="meta-value"><?= htmlspecialchars($order['id_pesanan']) ?></span>
-        </div>
-        <div>
-            <span class="meta-label">Outlet</span>
-            <span class="meta-value"><?= htmlspecialchars($order['outlet']) ?></span>
-        </div>
-    </section>
-
-    <ol class="tracking-steps" aria-label="Status pesanan">
-        <li class="tracking-step completed">
-            <span class="step-indicator"><i class="bi bi-check-lg"></i></span>
-            <div>
-                <h2 class="step-name">Pesanan Diterima</h2>
-                <p class="step-detail">09.42</p>
+    <!-- Top Navbar Seragam -->
+    <nav class="navbar navbar-expand-md navbar-light forkos-navbar sticky-top">
+        <div class="container">
+            <div class="d-flex align-items-center gap-2">
+                <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
+                    <div class="brand-mini-icon"><i class="bi bi-cup-hot-fill text-white"></i></div>
+                    <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
+                </a>
+                <span class="badge-ui">UI-005</span>
             </div>
-        </li>
-        <li class="tracking-step current" aria-current="step">
-            <span class="step-indicator">2</span>
-            <div>
-                <h2 class="step-name">Sedang Dibuat</h2>
-                <p class="step-detail"><?= htmlspecialchars($order['estimasi']) ?></p>
+            
+            <!-- Menu Navigasi Desktop -->
+            <div class="d-none d-md-flex align-items-center gap-3">
+                <div class="forkos-nav-links">
+                    <a href="index.php?page=home" class="forkos-nav-link">Home</a>
+                    <a href="index.php?page=katalog" class="forkos-nav-link">Katalog Menu</a>
+                    <a href="index.php?page=voucher" class="forkos-nav-link">Voucher</a>
+                    <a href="index.php?page=pesanan" class="forkos-nav-link active">Pesanan</a>
+                </div>
+                <a href="index.php?page=login" class="btn btn-outline-tomoro btn-sm px-3 rounded-pill ms-2">
+                    <i class="bi bi-person-circle me-1"></i> <?= htmlspecialchars($userName) ?>
+                </a>
             </div>
-        </li>
-        <li class="tracking-step">
-            <span class="step-indicator">3</span>
-            <div>
-                <h2 class="step-name">Siap Diambil</h2>
-                <p class="step-detail">&mdash;</p>
-            </div>
-        </li>
-        <li class="tracking-step">
-            <span class="step-indicator">4</span>
-            <div>
-                <h2 class="step-name">Selesai</h2>
-                <p class="step-detail">&mdash;</p>
-            </div>
-        </li>
-    </ol>
 
-    <section class="pickup-code-card" aria-label="Kode pengambilan">
-        <span class="pickup-code-label">QR PICK-UP SEMENTARA</span>
-        <strong class="pickup-code"><?= htmlspecialchars($order['pick_up_code']) ?></strong>
-        <div class="pickup-code-qr" id="pickupQr" role="img" aria-label="QR sementara untuk kode pengambilan <?= htmlspecialchars($order['pick_up_code']) ?>"></div>
-        <p class="pickup-instruction">Tunjukkan kode ini saat mengambil pesanan</p>
-    </section>
-
-    <section class="order-summary" aria-label="Ringkasan item">
-        <div>
-            <h2 class="summary-product"><?= (int)$order['kuantitas'] ?>&times; <?= htmlspecialchars($order['item_nama']) ?></h2>
-            <p class="summary-customization"><?= htmlspecialchars($order['kustomisasi']) ?></p>
+            <!-- Tampilan Kanan Mobile -->
+            <div class="d-flex d-md-none align-items-center">
+                <a href="index.php?page=login" class="btn btn-sm btn-light rounded-circle p-1">
+                    <i class="bi bi-person-fill text-dark fs-5"></i>
+                </a>
+            </div>
         </div>
-        <p class="summary-price">Rp<?= number_format((int)$order['total_harga'] + 2000, 0, ',', '.') ?></p>
-    </section>
-
-    <a class="home-button" href="index.php">Kembali ke Home</a>
-
-    <nav class="mobile-bottom-nav tracking-nav" aria-label="Navigasi bawah">
-        <a href="index.php" class="nav-bottom-item active text-decoration-none">
-            <i class="bi bi-house-door"></i>
-            <span>Home</span>
-        </a>
-        <a href="index.php?page=checkout&amp;id=<?= (int)$order['item_id'] ?>&amp;outlet=<?= urlencode($outletId) ?>" class="nav-bottom-item text-decoration-none">
-            <i class="bi bi-bag"></i>
-            <span>Pesanan</span>
-        </a>
     </nav>
-</section>
+
+<main class="container py-3 py-md-4 tracking-container">
+
+    <div class="tracking-card">
+        <!-- Header -->
+        <div class="d-flex align-items-center gap-3 mb-3">
+            <a href="index.php?page=checkout&amp;outlet=<?= urlencode($outletId) ?>" class="tracking-back-btn" aria-label="Kembali ke checkout">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+            <h1 class="h5 mb-0 fw-bold text-dark">Detail Pelacakan</h1>
+        </div>
+
+        <!-- Order Meta -->
+        <div class="row g-2 mb-3 pb-3 border-bottom">
+            <div class="col-6">
+                <span class="text-muted d-block" style="font-size: 0.72rem;">ID Pesanan</span>
+                <strong class="d-block text-dark" style="font-size: 0.85rem;"><?= htmlspecialchars($order['id_pesanan']) ?></strong>
+            </div>
+            <div class="col-6">
+                <span class="text-muted d-block" style="font-size: 0.72rem;">Outlet</span>
+                <strong class="d-block text-dark" style="font-size: 0.85rem;"><?= htmlspecialchars($order['outlet']) ?></strong>
+            </div>
+        </div>
+
+        <!-- Stepper Timeline Status -->
+        <div class="stepper-wrapper">
+            <div class="stepper-row completed">
+                <div class="stepper-connector active"></div>
+                <div class="stepper-icon"><i class="bi bi-check-lg"></i></div>
+                <div class="stepper-text">
+                    <h2>Pesanan Diterima</h2>
+                    <p>09.42</p>
+                </div>
+            </div>
+
+            <div class="stepper-row current">
+                <div class="stepper-connector"></div>
+                <div class="stepper-icon">2</div>
+                <div class="stepper-text">
+                    <h2>Sedang Dibuat</h2>
+                    <p><?= htmlspecialchars($order['estimasi'] ?? 'Barista sedang meracik') ?></p>
+                </div>
+            </div>
+
+            <div class="stepper-row">
+                <div class="stepper-connector"></div>
+                <div class="stepper-icon">3</div>
+                <div class="stepper-text">
+                    <h2>Siap Diambil</h2>
+                    <p>&mdash;</p>
+                </div>
+            </div>
+
+            <div class="stepper-row">
+                <div class="stepper-icon">4</div>
+                <div class="stepper-text">
+                    <h2>Selesai</h2>
+                    <p>&mdash;</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pick-up Code Card (Dark card persis SDD Gambar 5.6) -->
+        <section class="pickup-dark-card" aria-label="Kode pengambilan pesanan">
+            <div class="pickup-label">PICK-UP CODE</div>
+            <div class="pickup-code-number"><?= htmlspecialchars($order['pick_up_code']) ?></div>
+            <div class="pickup-qr-box">
+                <div id="pickupQr" role="img" aria-label="QR Code Pick-up"></div>
+            </div>
+            <p class="pickup-note">Tunjukkan kode ini saat mengambil pesanan</p>
+        </section>
+
+        <!-- Daftar Semua Menu yang Dipesan -->
+        <?php 
+        $orderItems = $order['items'] ?? [
+            [
+                'nama' => $order['item_nama'] ?? 'Caramel Macchiato',
+                'quantity' => $order['kuantitas'] ?? 1,
+                'harga' => $order['subtotal'] ?? 28000,
+                'kustomisasi' => $order['kustomisasi'] ?? 'Reguler • Gula Normal'
+            ]
+        ];
+        ?>
+        <section class="order-summary-box" aria-label="Ringkasan item pesanan">
+            <div class="fw-bold text-dark small mb-2">Item Pesanan (<?= count($orderItems) ?>)</div>
+            <?php foreach ($orderItems as $idx => $it): ?>
+                <div class="d-flex justify-content-between align-items-start py-2 <?= $idx > 0 ? 'border-top' : '' ?>">
+                    <div>
+                        <div class="fw-bold text-dark" style="font-size: 0.88rem;">
+                            <?= (int)$it['quantity'] ?>&times; <?= htmlspecialchars($it['nama']) ?>
+                        </div>
+                        <div class="text-muted" style="font-size: 0.74rem;">
+                            <?= htmlspecialchars($it['kustomisasi'] ?? 'Reguler • Gula Normal') ?>
+                        </div>
+                    </div>
+                    <div class="fw-bold text-orange" style="font-size: 0.88rem;">
+                        Rp<?= number_format((int)$it['harga'] * (int)$it['quantity'], 0, ',', '.') ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+
+            <div class="d-flex justify-content-between align-items-center pt-2 mt-1 border-top text-muted" style="font-size: 0.78rem;">
+                <span>Biaya Layanan</span>
+                <span class="fw-semibold text-dark">Rp<?= number_format((int)($order['biaya_layanan'] ?? 2000), 0, ',', '.') ?></span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center pt-2 mt-1 border-top">
+                <span class="fw-bold text-dark">Total Pembayaran</span>
+                <span class="fw-bold text-orange fs-6">
+                    Rp<?= number_format((int)($order['total_harga'] ?? 30000), 0, ',', '.') ?>
+                </span>
+            </div>
+        </section>
+
+        <!-- Tombol Aksi -->
+        <a class="btn-home-orange" href="index.php?page=home">Kembali ke Home</a>
+    </div>
+
 </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script>
-        new QRCode(document.getElementById('pickupQr'), {
-            text: <?= json_encode($qrContent, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
-            width: 88,
-            height: 88,
-            colorDark: '#1f242d',
-            colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.M
-        });
-    </script>
-    </body>
-    </html>
+
+<!-- Bottom Nav Mobile -->
+<div class="mobile-bottom-nav d-md-none">
+    <a href="index.php?page=home" class="nav-bottom-item active text-decoration-none">
+        <i class="bi bi-house-door-fill"></i>
+        <span>Home</span>
+    </a>
+    <a href="index.php?page=pesanan" class="nav-bottom-item text-decoration-none">
+        <i class="bi bi-bag"></i>
+        <span>Pesanan</span>
+    </a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+    new QRCode(document.getElementById('pickupQr'), {
+        text: <?= json_encode($qrContent, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
+        width: 110,
+        height: 110,
+        colorDark: '#111317',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+    });
+</script>
+</body>
+</html>

@@ -232,13 +232,6 @@ $menuList = !empty($rawItems) ? $rawItems : [
     <!-- Konten Utama -->
     <main class="container py-3 py-md-4">
 
-        <!-- Baris Aksi Tambah Menu -->
-        <div class="d-flex justify-content-end mb-2">
-            <a href="index.php?page=menu_create" class="btn btn-outline-tomoro btn-sm px-3 rounded-pill">
-                <i class="bi bi-plus-lg me-1"></i> Tambah Menu
-            </a>
-        </div>
-
         <!-- Header Terpusat -->
         <div class="katalog-header">
             <h2 class="fw-bold text-dark mb-2">Pilih Menu Favoritmu</h2>
@@ -307,15 +300,39 @@ $menuList = !empty($rawItems) ? $rawItems : [
                             </div>
                         </div>
 
-                        <a href="index.php?page=checkout&id=<?= urlencode((string)$id) ?>"
+                        <a href="index.php?page=katalog&amp;action=add&amp;id=<?= urlencode((string)$id) ?>&amp;outlet=<?= urlencode($outletId) ?>"
                            class="btn-add-cart text-decoration-none"
-                           title="Pesan <?= htmlspecialchars($nama) ?>">
-                            <i class="bi bi-bag-plus"></i>
+                           title="Tambah <?= htmlspecialchars($nama) ?> ke Keranjang">
+                            <i class="bi bi-plus-lg"></i>
                         </a>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
+
+        <!-- Floating Cart Bar (Kotak Panjang Keranjang Saat Ada Menu Dipilih) -->
+        <?php if (!empty($cartCount) && $cartCount > 0): ?>
+            <div class="fixed-bottom p-3 d-flex justify-content-center" style="z-index: 1040;">
+                <div class="shadow-lg rounded-pill px-4 py-3 d-flex align-items-center justify-content-between" style="width: min(92%, 620px); background: #1f242d; color: #ffffff;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="position-relative">
+                            <i class="bi bi-bag-check-fill fs-3 text-orange"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+                                <?= $cartCount ?>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="d-block fw-bold text-white small"><?= $cartCount ?> Menu Dipilih</span>
+                            <span class="text-orange fw-bold" style="font-size: 0.95rem;">Rp<?= number_format($cartTotal, 0, ',', '.') ?></span>
+                        </div>
+                    </div>
+                    <a href="index.php?page=checkout&amp;outlet=<?= urlencode($outletId) ?>" class="btn rounded-pill px-4 py-2 fw-bold text-white d-flex align-items-center gap-2" style="background-color: var(--tomoro-orange, #fa5a00); border: 0;">
+                        <span>Lihat Keranjang</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        <?php endif; ?>
 
     </main>
 
