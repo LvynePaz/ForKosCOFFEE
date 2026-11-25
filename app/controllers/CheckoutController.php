@@ -15,8 +15,8 @@ class CheckoutController {
 
     public function index(): void {
         $outlets = [
-            'gc' => 'TOMORO Coffee GC',
-            'batu_ampar' => 'TOMORO Coffee Batu Ampar'
+            'gc' => 'ForKos Coffee GC',
+            'batu_ampar' => 'ForKos Coffee Batu Ampar'
         ];
         $outletId = $_GET['outlet'] ?? 'gc';
         $outletId = is_string($outletId) && isset($outlets[$outletId]) ? $outletId : 'gc';
