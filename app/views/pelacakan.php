@@ -181,49 +181,21 @@ $outletId = $order['outlet_id'] ?? 'gc';
             background: #fa5a00;
             color: #ffffff;
             font-weight: 700;
-        }
-        .summary-customization {
-            margin: 0;
-            color: #888;
-            font-size: .55rem;
-        }
-        .summary-price {
-            margin: 0;
-            color: var(--tomoro-orange);
-            font-size: .68rem;
-            font-weight: 700;
-        }
-        .home-button {
+            font-size: 0.95rem;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
             display: block;
             width: 100%;
             text-align: center;
             text-decoration: none;
+            box-shadow: 0 6px 18px rgba(250, 90, 0, 0.25);
+            transition: all .2s;
         }
-        .home-button:hover,
-        .home-button:focus-visible {
-            background: var(--tomoro-orange-hover);
-            color: #fff;
-        }
-        @media (max-width: 767.98px) {
-            .tracking-frame { padding: 20px 16px 88px; gap: 12px; }
-        }
-        @media (min-width: 768px) {
-            .tracking-frame { padding: 32px; gap: 20px 32px; }
-            .tracking-title { font-size: 1.4rem; }
-            .meta-label, .meta-value { font-size: .85rem; }
-            .step-name { font-size: .9rem; }
-            .step-detail { font-size: .8rem; }
-            .summary-product { font-size: .9rem; }
-            .summary-customization { font-size: .78rem; }
-            .summary-price { font-size: .9rem; }
-            .tracking-nav { display: none; }
-        }
-        @media (min-width: 992px) {
-            .tracking-frame { grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr); }
-            .tracking-steps { grid-column: 1; align-self: center; }
-            .pickup-code-card { grid-column: 2; grid-row: 4; min-height: 260px; }
-            .order-summary { margin-top: 4px; }
-            .home-button { width: 100%; }
+        .btn-home-orange:hover,
+        .btn-home-orange:focus {
+            background: #e04f00;
+            color: #ffffff;
         }
     </style>
 </head>
