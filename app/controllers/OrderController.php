@@ -74,8 +74,8 @@ class OrderController {
             }
 
             $outlets = [
-                'gc' => 'TOMORO Coffee GC',
-                'batu_ampar' => 'TOMORO Coffee Batu Ampar'
+                'gc' => 'ForKos Coffee GC',
+                'batu_ampar' => 'ForKos Coffee Batu Ampar'
             ];
             $_SESSION['active_order'] = [
                 'id_pesanan' => 'FKS-' . date('ymd') . '-' . random_int(1000, 9999),

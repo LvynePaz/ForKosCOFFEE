@@ -23,8 +23,8 @@ class KatalogController {
     public function index(): void {
         $outletId = $_GET['outlet'] ?? 'gc';
         $outletNames = [
-            'gc' => 'TOMORO Coffee GC',
-            'batu_ampar' => 'TOMORO Coffee Batu Ampar'
+            'gc' => 'ForKos Coffee GC',
+            'batu_ampar' => 'ForKos Coffee Batu Ampar'
         ];
         $outletId = is_string($outletId) && isset($outletNames[$outletId]) ? $outletId : 'gc';
         $outletName = $outletNames[$outletId];
