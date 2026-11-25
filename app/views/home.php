@@ -1,5 +1,5 @@
 <?php
-$userName = $_SESSION['user_name'] ?? 'Cikocut';
+$userName =$_SESSION['user_name'] ?? 'Cikocut';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -14,30 +14,34 @@ $userName = $_SESSION['user_name'] ?? 'Cikocut';
 </head>
 <body class="app-body">
 
-    <!-- Top Navbar (Tampil di Desktop & Mobile) -->
-    <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top py-2">
+    <!-- Top Navbar Seragam -->
+    <nav class="navbar navbar-expand-md navbar-light forkos-navbar sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
-                <div class="brand-mini-icon">
-                    <i class="bi bi-cup-hot-fill text-white"></i>
-                </div>
-                <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
-            </a>
+            <div class="d-flex align-items-center gap-2">
+                <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
+                    <div class="brand-mini-icon">
+                        <i class="bi bi-cup-hot-fill text-white"></i>
+                    </div>
+                    <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
+                </a>
+                <span class="badge-ui">UI-002</span>
+            </div>
             
             <!-- Menu Navigasi Desktop -->
             <div class="d-none d-md-flex align-items-center gap-3">
-                <a href="index.php?page=home" class="nav-link active fw-bold text-orange">Home</a>
-                <a href="index.php?page=katalog" class="nav-link text-dark fw-semibold">Katalog Menu</a>
-                <a href="index.php?page=voucher" class="nav-link text-dark fw-semibold">Voucher</a>
-                <a href="index.php?page=pesanan" class="nav-link text-dark fw-semibold">Pesanan</a>
+                <div class="forkos-nav-links">
+                    <a href="index.php?page=home" class="forkos-nav-link active">Home</a>
+                    <a href="index.php?page=katalog" class="forkos-nav-link">Katalog Menu</a>
+                    <a href="index.php?page=voucher" class="forkos-nav-link">Voucher</a>
+                    <a href="index.php?page=pesanan" class="forkos-nav-link">Pesanan</a>
+                </div>
                 <a href="index.php?page=login" class="btn btn-outline-tomoro btn-sm px-3 rounded-pill ms-2">
                     <i class="bi bi-person-circle me-1"></i> <?= htmlspecialchars($userName) ?>
                 </a>
             </div>
 
-            <!-- Tampilan Kanan Mobile (Badge UI & Avatar) -->
-            <div class="d-flex d-md-none align-items-center gap-2">
-                <span class="badge-ui">UI-002</span>
+            <!-- Tampilan Kanan Mobile -->
+            <div class="d-flex d-md-none align-items-center">
                 <a href="index.php?page=login" class="btn btn-sm btn-light rounded-circle p-1">
                     <i class="bi bi-person-fill text-dark fs-5"></i>
                 </a>
@@ -65,29 +69,23 @@ $userName = $_SESSION['user_name'] ?? 'Cikocut';
             <!-- Kolom Kiri: Menu Utama -> Voucher Saya -> Promo Istimewa -->
             <div class="col-12 col-lg-7">
                 
-                <!-- 1. Menu Utama (4 Tombol Sesuai SDD UI-002) -->
+                <!-- 1. Menu Utama (Tanpa Favorit) -->
                 <div class="mb-3 mb-md-4">
                     <p class="section-sub-title">MENU UTAMA</p>
                     <div class="row g-2 g-md-3 text-center">
-                        <div class="col-3">
+                        <div class="col-4">
                             <a href="index.php?page=katalog" class="menu-item-btn active text-decoration-none">
                                 <i class="bi bi-cup-hot fs-4"></i>
                                 <span>Pesan Sekarang</span>
                             </a>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <a href="index.php?page=voucher" class="menu-item-btn text-decoration-none">
                                 <i class="bi bi-ticket-perforated fs-4"></i>
                                 <span>Voucher</span>
                             </a>
                         </div>
-                        <div class="col-3">
-                            <a href="index.php?page=katalog" class="menu-item-btn text-decoration-none">
-                                <i class="bi bi-heart fs-4"></i>
-                                <span>Favorit</span>
-                            </a>
-                        </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <a href="index.php?page=pesanan&tab=riwayat" class="menu-item-btn text-decoration-none">
                                 <i class="bi bi-clock-history fs-4"></i>
                                 <span>Riwayat</span>
@@ -96,65 +94,42 @@ $userName = $_SESSION['user_name'] ?? 'Cikocut';
                     </div>
                 </div>
 
-                <!-- 2. Kartu Ringkasan Akun: Voucher Saya & Favorit Saya (Sesuai SDD UI-002) -->
+                <!-- 2. Kartu Voucher Saya -->
                 <div class="mb-3 mb-md-4">
-                    <div class="row g-2 g-md-3">
-                        <div class="col-6">
-                            <a href="index.php?page=voucher" class="text-decoration-none">
-                                <div class="card-summary p-2 p-md-3 shadow-sm h-100">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="d-flex align-items-center gap-2 gap-md-3">
-                                            <div class="icon-summary-box text-orange">
-                                                <i class="bi bi-ticket fs-5"></i>
-                                            </div>
-                                            <div>
-                                                <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">Voucher Saya</span>
-                                                <span class="badge bg-light text-orange border border-warning" style="font-size: 0.65rem;">0 Tersedia</span>
-                                                <span class="d-none d-md-block text-muted small mt-1" style="font-size: 0.72rem;">Hemat s/d 40%</span>
-                                            </div>
-                                        </div>
-                                        <i class="bi bi-chevron-right text-muted d-none d-sm-block fs-6"></i>
+                    <a href="index.php?page=voucher" class="text-decoration-none">
+                        <div class="card-summary p-2 p-md-3 shadow-sm">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-summary-box text-orange">
+                                        <i class="bi bi-ticket fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <span class="d-block fw-bold text-dark" style="font-size: 0.88rem;">Voucher Saya</span>
+                                        <span class="badge bg-light text-orange border border-warning" style="font-size: 0.68rem;">0 Tersedia</span>
+                                        <span class="d-block text-muted small mt-1">Hemat s/d 40%</span>
                                     </div>
                                 </div>
-                            </a>
+                                <i class="bi bi-chevron-right text-muted pe-2 fs-6"></i>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <a href="index.php?page=katalog" class="text-decoration-none">
-                                <div class="card-summary p-2 p-md-3 shadow-sm h-100">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="d-flex align-items-center gap-2 gap-md-3">
-                                            <div class="icon-summary-box text-orange">
-                                                <i class="bi bi-heart fs-5"></i>
-                                            </div>
-                                            <div>
-                                                <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">Favorit Saya</span>
-                                                <span class="badge bg-light text-secondary border" style="font-size: 0.65rem;">0 Menu</span>
-                                                <span class="d-none d-md-block text-muted small mt-1" style="font-size: 0.72rem;">Pesan ulang 1 ketuk</span>
-                                            </div>
-                                        </div>
-                                        <i class="bi bi-chevron-right text-muted d-none d-sm-block fs-6"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- 3. Promo Istimewa Hari Ini -->
-<div class="mb-2" style="margin-bottom: 12px !important;">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <span class="fw-bold text-dark" style="font-size: 0.9rem;">Promo Istimewa Hari Ini</span>
-        <a href="index.php?page=voucher" class="text-orange small fw-bold text-decoration-none" style="font-size: 0.75rem;">Semua Promo</a>
-    </div>
-    <div class="promo-banner-card shadow-sm">
-        <span class="badge-pickup">KHUSUS SELF PICK-UP</span>
-        <h4 class="fw-bold text-white mt-2 mb-1" style="font-size: 1.1rem;">Diskon 30% Ambil Sendiri</h4>
-        <p class="text-light opacity-75 small mb-3" style="font-size: 0.75rem;">Gunakan kode promo: <strong>yiesanlimaratusjadirefund</strong></p>
-        <a href="index.php?page=voucher&claim=yiesanlimaratusjadirefund" class="btn-klaim-voucher text-decoration-none">
-            Klaim Voucher
-        </a>
-    </div>
-</div>
+                <div class="mb-2" style="margin-bottom: 12px !important;">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold text-dark" style="font-size: 0.9rem;">Promo Istimewa Hari Ini</span>
+                        <a href="index.php?page=voucher" class="text-orange small fw-bold text-decoration-none" style="font-size: 0.75rem;">Semua Promo</a>
+                    </div>
+                    <div class="promo-banner-card shadow-sm">
+                        <span class="badge-pickup">KHUSUS SELF PICK-UP</span>
+                        <h4 class="fw-bold text-white mt-2 mb-1" style="font-size: 1.1rem;">Diskon 30% Ambil Sendiri</h4>
+                        <p class="text-light opacity-75 small mb-3" style="font-size: 0.75rem;">Gunakan kode promo: <strong>yiesanlimaratusjadirefund</strong></p>
+                        <a href="index.php?page=voucher&claim=yiesanlimaratusjadirefund" class="btn-klaim-voucher text-decoration-none">
+                            Klaim Voucher
+                        </a>
+                    </div>
+                </div>
 
             </div>
 
@@ -167,7 +142,7 @@ $userName = $_SESSION['user_name'] ?? 'Cikocut';
                         <a href="index.php?page=katalog" class="text-orange small text-decoration-none" style="font-size: 0.75rem;">Lihat Semua (8 Gerai)</a>
                     </div>
                     
-                    <!-- Outlet 1: TOMORO Coffee GC -->
+                    <!-- Outlet 1: ForKos Coffee GC -->
                     <a href="index.php?page=katalog&outlet=gc" class="text-decoration-none text-dark d-block mb-2 mb-md-3">
                         <div class="card-outlet p-2 p-md-3 d-flex justify-content-between align-items-center shadow-sm">
                             <div class="d-flex align-items-center gap-3">
@@ -184,7 +159,7 @@ $userName = $_SESSION['user_name'] ?? 'Cikocut';
                         </div>
                     </a>
 
-                    <!-- Outlet 2: TOMORO Coffee Batu Ampar -->
+                    <!-- Outlet 2: ForKos Coffee Batu Ampar -->
                     <a href="index.php?page=katalog&outlet=batu_ampar" class="text-decoration-none text-dark d-block">
                         <div class="card-outlet p-2 p-md-3 d-flex justify-content-between align-items-center shadow-sm">
                             <div class="d-flex align-items-center gap-3">
@@ -208,7 +183,7 @@ $userName = $_SESSION['user_name'] ?? 'Cikocut';
 
     </main>
 
-    <!-- Bottom Navigation Bar (Otomatis Hanya Muncul di HP / Layar Sempit) -->
+    <!-- Bottom Navigation Bar (Khusus Layar HP) -->
     <div class="mobile-bottom-nav d-md-none">
         <a href="index.php?page=home" class="nav-bottom-item active text-decoration-none">
             <i class="bi bi-house-door-fill"></i>
