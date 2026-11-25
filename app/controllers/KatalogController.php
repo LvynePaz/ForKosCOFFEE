@@ -21,6 +21,14 @@ class KatalogController {
      * Menampilkan katalog menu kopi
      */
     public function index(): void {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
+
         $outletId = $_GET['outlet'] ?? 'gc';
         $outletNames = [
             'gc' => 'ForKos Coffee GC',
@@ -28,14 +36,55 @@ class KatalogController {
         ];
         $outletId = is_string($outletId) && isset($outletNames[$outletId]) ? $outletId : 'gc';
         $outletName = $outletNames[$outletId];
+
+        // Handle tambah item ke keranjang
+        $action = $_GET['action'] ?? '';
+        if ($action === 'add') {
+            $productId = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+            if ($productId) {
+                $catalog = $this->productModel->getCatalog();
+                foreach ($catalog as $item) {
+                    if ($item['id'] === $productId) {
+                        if (isset($_SESSION['cart'][$productId])) {
+                            $_SESSION['cart'][$productId]['quantity'] += 1;
+                        } else {
+                            $_SESSION['cart'][$productId] = [
+                                'id'          => $item['id'],
+                                'nama'        => $item['nama'],
+                                'harga'       => (int)$item['harga'],
+                                'kategori'    => $item['kategori'] ?? 'Kopi',
+                                'gambar'      => $item['gambar'] ?? '',
+                                'quantity'    => 1,
+                                'kustomisasi' => 'Reguler • Gula Normal • Tanpa topping'
+                            ];
+                        }
+                        break;
+                    }
+                }
+            }
+            header('Location: index.php?page=katalog&outlet=' . urlencode($outletId) . '&added=1');
+            exit;
+        }
+
+        $cartCount = 0;
+        $cartTotal = 0;
+        foreach ($_SESSION['cart'] as $c) {
+            $cartCount += (int)$c['quantity'];
+            $cartTotal += (int)$c['harga'] * (int)$c['quantity'];
+        }
+
         $produkList = $this->productModel->getCatalog();
         $kategori   = ['Semua', 'Kopi', 'Non-Kopi', 'Makanan', 'Snack'];
 
         $this->renderView('katalog', [
-            'outlet'   => $outletName,
-            'outletId' => $outletId,
-            'produk'   => $produkList,
-            'kategori' => $kategori
+            'outlet'     => $outletName,
+            'outletName' => $outletName,
+            'outletId'   => $outletId,
+            'produk'     => $produkList,
+            'menuList'   => $produkList,
+            'kategori'   => $kategori,
+            'cartCount'  => $cartCount,
+            'cartTotal'  => $cartTotal
         ]);
     }
 

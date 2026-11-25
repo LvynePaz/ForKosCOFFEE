@@ -198,12 +198,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- Top Navbar Serasi dengan Halaman Home -->
     <nav class="navbar navbar-light bg-white border-bottom sticky-top py-2">
         <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
-                <div class="brand-mini-icon">
-                    <i class="bi bi-cup-hot-fill text-white"></i>
-                </div>
-                <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
-            </a>
+            <div class="d-flex align-items-center gap-2">
+                <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
+                    <div class="brand-mini-icon">
+                        <i class="bi bi-cup-hot-fill text-white"></i>
+                    </div>
+                    <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
+                </a>
+                <span class="badge-ui">UI-001</span>
+            </div>
             
             <a href="index.php?page=home" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
                 <i class="bi bi-arrow-left me-1"></i> Kembali ke Beranda
