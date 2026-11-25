@@ -160,7 +160,9 @@ $outletId = $outletId ?? 'gc';
             border: 1.5px dashed var(--ForKos-orange);
             border-radius: 18px;
             background: #fff;
+            color: inherit;
             text-align: left;
+            text-decoration: none;
         }
         .voucher-title {
             display: block;
@@ -175,6 +177,14 @@ $outletId = $outletId ?? 'gc';
             font-size: .72rem;
         }
         .voucher-card > i { color: #171717; font-size: 1.1rem; }
+        .voucher-remove {
+            display: inline-block;
+            margin-top: 8px;
+            color: #b42318;
+            font-size: .78rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
         .payment-options {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -273,7 +283,7 @@ $outletId = $outletId ?? 'gc';
             .checkout-heading,
             .pickup-card { grid-column: 1 / -1; }
             .checkout-order { grid-column: 1; grid-row: 4; }
-            .voucher-card { grid-column: 1; grid-row: 5; align-self: start; }
+            .checkout-voucher { grid-column: 1; grid-row: 5; align-self: start; }
             .checkout-payment { grid-column: 2; grid-row: 4; }
             .payment-summary { grid-column: 2; grid-row: 5; }
             .checkout-action { grid-column: 2; grid-row: 6; }
@@ -380,13 +390,32 @@ $outletId = $outletId ?? 'gc';
         <?php endif; ?>
     </section>
 
-    <button class="voucher-card" type="button">
-        <span>
-            <span class="voucher-title">Pakai Voucher</span>
-            <span class="voucher-hint">Punya kode promo?</span>
-        </span>
-        <i class="bi bi-chevron-right"></i>
-    </button>
+    <div class="checkout-voucher">
+        <a class="voucher-card" href="index.php?page=voucher&amp;outlet=<?= urlencode($outletId) ?>">
+            <span>
+                <span class="voucher-title"><?= $selectedVoucher !== null ? 'Voucher digunakan' : 'Pakai Voucher' ?></span>
+                <span class="voucher-hint">
+                    <?php if ($selectedVoucher !== null): ?>
+                        <?= htmlspecialchars($selectedVoucher['kode']) ?>
+                        <?php if ($discount > 0): ?>
+                            &bull; Potongan Rp<?= number_format($discount, 0, ',', '.') ?>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        Pilih voucher dari halaman Voucher
+                    <?php endif; ?>
+                </span>
+            </span>
+            <i class="bi bi-chevron-right"></i>
+        </a>
+        <?php if ($selectedVoucher !== null): ?>
+            <a class="voucher-remove" href="index.php?page=checkout&amp;outlet=<?= urlencode($outletId) ?>&amp;remove_voucher=1">Hapus voucher</a>
+        <?php endif; ?>
+        <?php if (!empty($voucherMessage)): ?>
+            <div class="alert alert-<?= htmlspecialchars($voucherMessageType) ?> py-2 mt-2 mb-0" role="status">
+                <?= htmlspecialchars($voucherMessage) ?>
+            </div>
+        <?php endif; ?>
+    </div>
 
     <section class="checkout-payment" aria-labelledby="payment-heading">
         <h2 class="checkout-section-title" id="payment-heading">Metode pembayaran</h2>
@@ -419,6 +448,12 @@ $outletId = $outletId ?? 'gc';
             <span>Biaya layanan</span>
             <strong>Rp<?= number_format($serviceFee ?? 2000, 0, ',', '.') ?></strong>
         </div>
+        <?php if ($discount > 0 && $selectedVoucher !== null): ?>
+            <div class="summary-row">
+                <span>Voucher (<?= htmlspecialchars($selectedVoucher['kode']) ?>)</span>
+                <strong class="text-success">-Rp<?= number_format($discount, 0, ',', '.') ?></strong>
+            </div>
+        <?php endif; ?>
         <div class="summary-row summary-total">
             <span>Total</span>
             <strong id="total">Rp<?= number_format($total ?? ((int)$item['harga'] + 2000), 0, ',', '.') ?></strong>

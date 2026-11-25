@@ -66,7 +66,7 @@ $userName =$_SESSION['user_name'] ?? 'Cikocut';
         <!-- Grid Responsif: Desktop 2 Kolom, Mobile Otomatis Menumpuk Sesuai Urutan Figma -->
         <div class="row gy-2 gx-3 g-lg-4">
             
-            <!-- Kolom Kiri: Menu Utama -> Voucher Saya -> Promo Istimewa -->
+            <!-- Kolom Kiri: Menu Utama -> Promo Istimewa -->
             <div class="col-12 col-lg-7">
                 
                 <!-- 1. Menu Utama (Tanpa Favorit) -->
@@ -94,28 +94,7 @@ $userName =$_SESSION['user_name'] ?? 'Cikocut';
                     </div>
                 </div>
 
-                <!-- 2. Kartu Voucher Saya -->
-                <div class="mb-3 mb-md-4">
-                    <a href="index.php?page=voucher" class="text-decoration-none">
-                        <div class="card-summary p-2 p-md-3 shadow-sm">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="icon-summary-box text-orange">
-                                        <i class="bi bi-ticket fs-4"></i>
-                                    </div>
-                                    <div>
-                                        <span class="d-block fw-bold text-dark" style="font-size: 0.88rem;">Voucher Saya</span>
-                                        <span class="badge bg-light text-orange border border-warning" style="font-size: 0.68rem;">0 Tersedia</span>
-                                        <span class="d-block text-muted small mt-1">Hemat s/d 40%</span>
-                                    </div>
-                                </div>
-                                <i class="bi bi-chevron-right text-muted pe-2 fs-6"></i>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- 3. Promo Istimewa Hari Ini -->
+                <!-- 2. Promo Istimewa Hari Ini -->
                 <div class="mb-2" style="margin-bottom: 12px !important;">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <span class="fw-bold text-dark" style="font-size: 0.9rem;">Promo Istimewa Hari Ini</span>
@@ -167,7 +146,6 @@ $userName =$_SESSION['user_name'] ?? 'Cikocut';
                                     <i class="bi bi-geo-alt-fill text-orange fs-4"></i>
                                 </div>
                                 <div>
-                                    <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">ForKos Coffee Batu Ampar</span>
                                     <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">ForKos Coffee Batu Ampar</span>
                                     <span class="d-block text-muted small">Jl. Bangka IX No. 24, Balikpapan</span>
                                     <span class="d-block text-muted small mt-1"><strong>0.8 km</strong> &bull; Buka 24 JAM &bull; Est. 10-15 menit</span>

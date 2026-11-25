@@ -34,7 +34,6 @@ $outletId = $order['outlet_id'] ?? 'gc';
     <link href="assets/css/style.css" rel="stylesheet">
     <style>
         .tracking-container {
-            max-width: 520px;
             margin: 0 auto;
             padding-bottom: 80px;
         }
@@ -59,6 +58,12 @@ $outletId = $order['outlet_id'] ?? 'gc';
         .tracking-back-btn:hover {
             background: #f9fafb;
             color: #111827;
+        }
+        .tracking-status-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            align-items: center;
+            gap: 24px;
         }
 
         /* Stepper matching SDD Gambar 5.6 */
@@ -135,6 +140,17 @@ $outletId = $order['outlet_id'] ?? 'gc';
             text-align: center;
             color: #ffffff;
             margin-bottom: 22px;
+        }
+        @media (min-width: 992px) {
+            .pickup-dark-card {
+                margin-bottom: 0;
+            }
+        }
+        @media (max-width: 991.98px) {
+            .tracking-status-layout {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
         }
         .pickup-label {
             color: #fa5a00;
@@ -257,53 +273,55 @@ $outletId = $order['outlet_id'] ?? 'gc';
             </div>
         </div>
 
-        <!-- Stepper Timeline Status -->
-        <div class="stepper-wrapper">
-            <div class="stepper-row completed">
-                <div class="stepper-connector active"></div>
-                <div class="stepper-icon"><i class="bi bi-check-lg"></i></div>
-                <div class="stepper-text">
-                    <h2>Pesanan Diterima</h2>
-                    <p>09.42</p>
+        <div class="tracking-status-layout">
+            <!-- Stepper Timeline Status -->
+            <div class="stepper-wrapper">
+                <div class="stepper-row completed">
+                    <div class="stepper-connector active"></div>
+                    <div class="stepper-icon"><i class="bi bi-check-lg"></i></div>
+                    <div class="stepper-text">
+                        <h2>Pesanan Diterima</h2>
+                        <p>09.42</p>
+                    </div>
+                </div>
+
+                <div class="stepper-row current">
+                    <div class="stepper-connector"></div>
+                    <div class="stepper-icon">2</div>
+                    <div class="stepper-text">
+                        <h2>Sedang Dibuat</h2>
+                        <p><?= htmlspecialchars($order['estimasi'] ?? 'Barista sedang meracik') ?></p>
+                    </div>
+                </div>
+
+                <div class="stepper-row">
+                    <div class="stepper-connector"></div>
+                    <div class="stepper-icon">3</div>
+                    <div class="stepper-text">
+                        <h2>Siap Diambil</h2>
+                        <p>&mdash;</p>
+                    </div>
+                </div>
+
+                <div class="stepper-row">
+                    <div class="stepper-icon">4</div>
+                    <div class="stepper-text">
+                        <h2>Selesai</h2>
+                        <p>&mdash;</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="stepper-row current">
-                <div class="stepper-connector"></div>
-                <div class="stepper-icon">2</div>
-                <div class="stepper-text">
-                    <h2>Sedang Dibuat</h2>
-                    <p><?= htmlspecialchars($order['estimasi'] ?? 'Barista sedang meracik') ?></p>
+            <!-- Pick-up Code Card (Dark card persis SDD Gambar 5.6) -->
+            <section class="pickup-dark-card" aria-label="Kode pengambilan pesanan">
+                <div class="pickup-label">PICK-UP CODE</div>
+                <div class="pickup-code-number"><?= htmlspecialchars($order['pick_up_code']) ?></div>
+                <div class="pickup-qr-box">
+                    <div id="pickupQr" role="img" aria-label="QR Code Pick-up"></div>
                 </div>
-            </div>
-
-            <div class="stepper-row">
-                <div class="stepper-connector"></div>
-                <div class="stepper-icon">3</div>
-                <div class="stepper-text">
-                    <h2>Siap Diambil</h2>
-                    <p>&mdash;</p>
-                </div>
-            </div>
-
-            <div class="stepper-row">
-                <div class="stepper-icon">4</div>
-                <div class="stepper-text">
-                    <h2>Selesai</h2>
-                    <p>&mdash;</p>
-                </div>
-            </div>
+                <p class="pickup-note">Tunjukkan kode ini saat mengambil pesanan</p>
+            </section>
         </div>
-
-        <!-- Pick-up Code Card (Dark card persis SDD Gambar 5.6) -->
-        <section class="pickup-dark-card" aria-label="Kode pengambilan pesanan">
-            <div class="pickup-label">PICK-UP CODE</div>
-            <div class="pickup-code-number"><?= htmlspecialchars($order['pick_up_code']) ?></div>
-            <div class="pickup-qr-box">
-                <div id="pickupQr" role="img" aria-label="QR Code Pick-up"></div>
-            </div>
-            <p class="pickup-note">Tunjukkan kode ini saat mengambil pesanan</p>
-        </section>
 
         <!-- Daftar Semua Menu yang Dipesan -->
         <?php 
@@ -338,6 +356,13 @@ $outletId = $order['outlet_id'] ?? 'gc';
                 <span>Biaya Layanan</span>
                 <span class="fw-semibold text-dark">Rp<?= number_format((int)($order['biaya_layanan'] ?? 2000), 0, ',', '.') ?></span>
             </div>
+
+            <?php if (!empty($order['diskon_voucher'])): ?>
+                <div class="d-flex justify-content-between align-items-center pt-2 mt-1 border-top text-muted" style="font-size: 0.78rem;">
+                    <span>Voucher (<?= htmlspecialchars($order['voucher'] ?? '') ?>)</span>
+                    <span class="fw-semibold text-success">-Rp<?= number_format((int)$order['diskon_voucher'], 0, ',', '.') ?></span>
+                </div>
+            <?php endif; ?>
 
             <div class="d-flex justify-content-between align-items-center pt-2 mt-1 border-top">
                 <span class="fw-bold text-dark">Total Pembayaran</span>

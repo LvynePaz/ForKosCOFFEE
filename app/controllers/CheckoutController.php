@@ -5,12 +5,15 @@
  */
 
 require_once dirname(__DIR__) . '/models/Product.php';
+require_once dirname(__DIR__) . '/models/Voucher.php';
 
 class CheckoutController {
     private Product $productModel;
+    private Voucher $voucherModel;
 
-    public function __construct(?Product $productModel = null) {
+    public function __construct(?Product $productModel = null, ?Voucher $voucherModel = null) {
         $this->productModel = $productModel ?? new Product();
+        $this->voucherModel = $voucherModel ?? new Voucher();
     }
 
     public function index(): void {
@@ -71,9 +74,61 @@ class CheckoutController {
             $subtotal += (int)$c['harga'] * (int)$c['quantity'];
         }
 
+        // Validasi voucher yang dipilih, lalu simpan ke session agar tetap terbawa ke checkout.
+        if (isset($_GET['voucher'])) {
+            $requestedCode = is_string($_GET['voucher']) ? trim($_GET['voucher']) : '';
+            $voucher = $this->voucherModel->findActive($requestedCode);
+
+            if ($voucher === null) {
+                $_SESSION['checkout_voucher_message'] = 'Kode voucher tidak valid.';
+                $_SESSION['checkout_voucher_message_type'] = 'danger';
+            } elseif (!$this->voucherModel->isEligible($voucher, $subtotal)) {
+                $_SESSION['checkout_voucher_message'] = $subtotal === 0
+                    ? 'Tambahkan menu ke keranjang sebelum memakai voucher.'
+                    : 'Voucher ini belum memenuhi minimum belanja Rp' . number_format((int)$voucher['minimum'], 0, ',', '.') . '.';
+                $_SESSION['checkout_voucher_message_type'] = 'danger';
+            } else {
+                $_SESSION['checkout_voucher'] = $voucher['kode'];
+                $_SESSION['checkout_voucher_message'] = 'Voucher berhasil digunakan.';
+                $_SESSION['checkout_voucher_message_type'] = 'success';
+            }
+
+            header('Location: index.php?page=checkout&outlet=' . urlencode($outletId));
+            exit;
+        }
+
+        if (isset($_GET['remove_voucher'])) {
+            unset($_SESSION['checkout_voucher']);
+            $_SESSION['checkout_voucher_message'] = 'Voucher dihapus.';
+            $_SESSION['checkout_voucher_message_type'] = 'success';
+            header('Location: index.php?page=checkout&outlet=' . urlencode($outletId));
+            exit;
+        }
+
+        $selectedVoucher = null;
+        $selectedVoucherCode = $_SESSION['checkout_voucher'] ?? '';
+        if (is_string($selectedVoucherCode) && $selectedVoucherCode !== '') {
+            $selectedVoucher = $this->voucherModel->findActive($selectedVoucherCode);
+            if ($selectedVoucher === null) {
+                unset($_SESSION['checkout_voucher']);
+            }
+        }
+
         $serviceFee = !empty($cart) ? 2000 : 0;
-        $discount = 0;
+        // Hitung diskon dari subtotal keranjang tanpa mengurangi biaya layanan.
+        $discount = $selectedVoucher !== null
+            ? $this->voucherModel->calculateDiscount($selectedVoucher, $subtotal)
+            : 0;
         $total = max(0, $subtotal + $serviceFee - $discount);
+
+        $voucherMessage = $_SESSION['checkout_voucher_message'] ?? null;
+        $voucherMessageType = $_SESSION['checkout_voucher_message_type'] ?? 'success';
+        unset($_SESSION['checkout_voucher_message'], $_SESSION['checkout_voucher_message_type']);
+
+        if ($selectedVoucher !== null && !$this->voucherModel->isEligible($selectedVoucher, $subtotal)) {
+            $voucherMessage = 'Voucher belum memenuhi minimum belanja Rp' . number_format((int)$selectedVoucher['minimum'], 0, ',', '.') . '.';
+            $voucherMessageType = 'warning';
+        }
 
         $firstItem = !empty($cart) ? reset($cart) : ['nama' => 'Menu Kopi', 'harga' => 25000];
 
@@ -82,8 +137,11 @@ class CheckoutController {
             'cart'       => $cart,
             'subtotal'   => $subtotal,
             'serviceFee' => $serviceFee,
+            'selectedVoucher' => $selectedVoucher,
             'discount'   => $discount,
             'total'      => $total,
+            'voucherMessage' => $voucherMessage,
+            'voucherMessageType' => $voucherMessageType,
             'outlet'     => $outlets[$outletId],
             'outletId'   => $outletId
         ]);
