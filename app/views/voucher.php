@@ -1,6 +1,7 @@
 <?php
 $userName    = $_SESSION['user_name'] ?? 'Cikocut';
 $claimedCode = trim($_GET['claim'] ?? '');
+$outletId    = $outletId ?? 'gc';
 
 $voucherList = (!empty($vouchers) && is_array($vouchers)) ? $vouchers : [
     [
@@ -130,6 +131,27 @@ $voucherList = (!empty($vouchers) && is_array($vouchers)) ? $vouchers : [
             color: #ffffff;
             transform: translateY(-2px);
         }
+
+        .btn-gunakan-voucher {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 10px 16px;
+            border-radius: 12px;
+            background: #fa5a00;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .btn-gunakan-voucher:hover,
+        .btn-gunakan-voucher:focus-visible {
+            background: #e04e00;
+            color: #ffffff;
+        }
     </style>
 </head>
 <body class="app-body">
@@ -214,6 +236,10 @@ $voucherList = (!empty($vouchers) && is_array($vouchers)) ? $vouchers : [
                                 <i class="bi bi-clipboard me-1"></i>Salin
                             </button>
                         </div>
+                        <a class="btn-gunakan-voucher"
+                           href="index.php?page=checkout&amp;outlet=<?= urlencode($outletId) ?>&amp;voucher=<?= urlencode($kode) ?>">
+                            <i class="bi bi-ticket-perforated"></i> Gunakan Voucher
+                        </a>
                     </div>
                 </div>
             <?php endforeach; ?>

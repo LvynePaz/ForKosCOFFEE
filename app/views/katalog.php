@@ -322,13 +322,13 @@ $menuList = !empty($rawItems) ? $rawItems : [
                             </span>
                         </div>
                         <div>
-                            <span class="d-block fw-bold text-white small"><?= $cartCount ?> Menu Dipilih</span>
+                            <span class="d-block fw-bold text-white small"> Total Harga</span>
                             <span class="text-orange fw-bold" style="font-size: 0.95rem;">Rp<?= number_format($cartTotal, 0, ',', '.') ?></span>
                         </div>
                     </div>
-                    <a href="index.php?page=checkout&amp;outlet=<?= urlencode($outletId) ?>" class="btn rounded-pill px-4 py-2 fw-bold text-white d-flex align-items-center gap-2" style="background-color: var(--tomoro-orange, #fa5a00); border: 0;">
+                    <a href="index.php?page=checkout&amp;outlet=<?= urlencode($outletId) ?>" class="btn rounded-pill px-6 py-3 fw-bold text-white d-flex align-items-center gap-3" style="background-color: var(--tomoro-orange, #fa5a00); border: 0;">
                         <span>Lihat Keranjang</span>
-                        <i class="bi bi-arrow-right"></i>
+                        <!-- <i class="bi bi-arrow-right"></i> -->
                     </a>
                 </div>
             </div>

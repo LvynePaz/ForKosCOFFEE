@@ -6,6 +6,7 @@
  */
 
 require_once dirname(__DIR__) . '/models/Product.php';
+require_once dirname(__DIR__) . '/models/Voucher.php';
 
 class OrderController {
     private ?Product $productModel;
@@ -87,7 +88,14 @@ class OrderController {
             }
 
             $serviceFee = 2000;
-            $totalHarga = $subtotal + $serviceFee;
+            // Hitung ulang diskon di server agar total pesanan tidak bergantung pada nilai dari browser.
+            $voucherModel = new Voucher();
+            $voucherCode = $_SESSION['checkout_voucher'] ?? '';
+            $voucher = is_string($voucherCode) ? $voucherModel->findActive($voucherCode) : null;
+            $discount = $voucher !== null && $voucherModel->isEligible($voucher, $subtotal)
+                ? $voucherModel->calculateDiscount($voucher, $subtotal)
+                : 0;
+            $totalHarga = max(0, $subtotal + $serviceFee - $discount);
 
             $_SESSION['active_order'] = [
                 'id_pesanan' => 'FKS-' . date('ymd') . '-' . random_int(1000, 9999),
@@ -103,12 +111,19 @@ class OrderController {
                 'kustomisasi' => $orderItems[0]['kustomisasi'],
                 'subtotal' => $subtotal,
                 'biaya_layanan' => $serviceFee,
+                'diskon_voucher' => $discount,
+                'voucher' => $discount > 0 ? $voucher['kode'] : null,
                 'total_harga' => $totalHarga,
                 'pembayaran' => $payment
             ];
 
             // Kosongkan keranjang setelah order dibuat
             $_SESSION['cart'] = [];
+            unset(
+                $_SESSION['checkout_voucher'],
+                $_SESSION['checkout_voucher_message'],
+                $_SESSION['checkout_voucher_message_type']
+            );
 
             header('Location: index.php?page=pelacakan', true, 303);
             exit;

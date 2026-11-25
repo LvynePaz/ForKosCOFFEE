@@ -45,7 +45,7 @@ if (!function_exists('e')) {
             box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
         }
         .btn-coffee-submit {
-            background-color: var(--tomoro-orange, #fa5a00);
+            background-color: var(--ForKos-orange, #fa5a00);
             color: #ffffff;
             border: none;
             border-radius: 14px;
@@ -55,7 +55,7 @@ if (!function_exists('e')) {
             transition: all 0.2s ease;
         }
         .btn-coffee-submit:hover {
-            background-color: var(--tomoro-orange-hover, #e04e00);
+            background-color: var(--ForKos-orange-hover, #e04e00);
             color: #ffffff;
         }
         .form-control, .form-select {
@@ -65,7 +65,7 @@ if (!function_exists('e')) {
             font-size: 0.9rem;
         }
         .form-control:focus, .form-select:focus {
-            border-color: var(--tomoro-orange, #fa5a00);
+            border-color: var(--ForKos-orange, #fa5a00);
             box-shadow: 0 0 0 0.2rem rgba(250, 90, 0, 0.15);
         }
         .btn-back-link {

@@ -5,14 +5,14 @@
    ======================================================== */
 
 :root {
-    --tomoro-orange: #fa5a00;
-    --tomoro-orange-hover: #e04e00;
-    --tomoro-orange-light: #fff5ef;
-    --tomoro-orange-border: #ffd8c2;
-    --tomoro-dark: #1f242d;
-    --tomoro-gray: #6c757d;
-    --tomoro-bg: #f8f9fa;
-    --tomoro-white: #ffffff;
+    --ForKos-orange: #fa5a00;
+    --ForKos-orange-hover: #e04e00;
+    --ForKos-orange-light: #fff5ef;
+    --ForKos-orange-border: #ffd8c2;
+    --ForKos-dark: #1f242d;
+    --ForKos-gray: #6c757d;
+    --ForKos-bg: #f8f9fa;
+    --ForKos-white: #ffffff;
 }
 
 html, body {
@@ -31,7 +31,7 @@ body.app-body {
 .brand-mini-icon {
     width: 32px;
     height: 32px;
-    background-color: var(--tomoro-orange);
+    background-color: var(--ForKos-orange);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -45,17 +45,17 @@ body.app-body {
 }
 
 .text-orange {
-    color: var(--tomoro-orange) !important;
+    color: var(--ForKos-orange) !important;
 }
 
-.btn-outline-tomoro {
-    color: var(--tomoro-orange);
-    border: 1.5px solid var(--tomoro-orange);
+.btn-outline-ForKos {
+    color: var(--ForKos-orange);
+    border: 1.5px solid var(--ForKos-orange);
     font-weight: 600;
 }
 
-.btn-outline-tomoro:hover {
-    background-color: var(--tomoro-orange);
+.btn-outline-ForKos:hover {
+    background-color: var(--ForKos-orange);
     color: #ffffff;
 }
 
@@ -110,24 +110,24 @@ body.app-body {
 }
 
 .menu-item-btn i {
-    color: var(--tomoro-orange) !important;
+    color: var(--ForKos-orange) !important;
 }
 
 .menu-item-btn span {
     font-size: 0.75rem;
     font-weight: 700;
-    color: var(--tomoro-dark);
+    color: var(--ForKos-dark);
 }
 
 .menu-item-btn:hover {
-    border-color: var(--tomoro-orange);
+    border-color: var(--ForKos-orange);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(250, 90, 0, 0.15);
 }
 
 .menu-item-btn.active {
-    background-color: var(--tomoro-orange) !important;
-    border-color: var(--tomoro-orange) !important;
+    background-color: var(--ForKos-orange) !important;
+    border-color: var(--ForKos-orange) !important;
     box-shadow: 0 4px 12px rgba(250, 90, 0, 0.3);
 }
 
@@ -146,7 +146,7 @@ body.app-body {
 }
 
 .badge-pickup {
-    background: var(--tomoro-orange);
+    background: var(--ForKos-orange);
     color: #ffffff;
     font-size: 0.65rem;
     font-weight: 800;
@@ -155,7 +155,7 @@ body.app-body {
 }
 
 .btn-klaim-voucher {
-    background-color: var(--tomoro-orange) !important;
+    background-color: var(--ForKos-orange) !important;
     color: #ffffff !important;
     border-radius: 10px !important;
     padding: 7px 18px !important;
@@ -167,7 +167,7 @@ body.app-body {
 }
 
 .btn-klaim-voucher:hover {
-    background-color: var(--tomoro-orange-hover) !important;
+    background-color: var(--ForKos-orange-hover) !important;
     transform: translateY(-1px);
 }
 
@@ -182,7 +182,7 @@ body.app-body {
 
 .card-summary:hover,
 .card-outlet:hover {
-    border-color: var(--tomoro-orange-border);
+    border-color: var(--ForKos-orange-border);
     transform: translateY(-2px);
 }
 
@@ -191,7 +191,7 @@ body.app-body {
     width: 42px;
     height: 42px;
     border-radius: 12px;
-    background: var(--tomoro-orange-light);
+    background: var(--ForKos-orange-light);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -200,8 +200,8 @@ body.app-body {
 .badge-status-pilih {
     font-size: 0.7rem;
     font-weight: 700;
-    color: var(--tomoro-orange);
-    border: 1.5px solid var(--tomoro-orange);
+    color: var(--ForKos-orange);
+    border: 1.5px solid var(--ForKos-orange);
     border-radius: 12px;
     padding: 3px 10px;
 }
@@ -209,8 +209,8 @@ body.app-body {
 .badge-status-outlet {
     font-size: 0.7rem;
     font-weight: 700;
-    color: var(--tomoro-orange);
-    background: var(--tomoro-orange-light);
+    color: var(--ForKos-orange);
+    background: var(--ForKos-orange-light);
     border-radius: 12px;
     padding: 3px 8px;
 }
@@ -244,7 +244,7 @@ body.app-body {
 }
 
 .nav-bottom-item.active {
-    color: var(--tomoro-orange);
+    color: var(--ForKos-orange);
 }
 
 /* Khusus Mobile (Mencegah Konten Tertutup Bottom Nav & Merapikan Padding iPhone) */

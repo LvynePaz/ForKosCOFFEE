@@ -5,30 +5,25 @@
  * Dokumen SDD: Bab 1.4 & Bab 4.1 (Voucher & DiskonStrategy)
  */
 
+require_once dirname(__DIR__) . '/models/Voucher.php';
+
 class VoucherController {
+    private Voucher $voucherModel;
+
+    public function __construct(?Voucher $voucherModel = null) {
+        $this->voucherModel = $voucherModel ?? new Voucher();
+    }
+
     /**
      * Menampilkan daftar voucher dan promo aktif
      */
     public function index(): void {
-        $vouchers = [
-            [
-                'kode'      => 'yiesanlimaratusjadirefund',
-                'judul'     => 'Diskon 30% Ambil Sendiri',
-                'deskripsi' => 'Khusus pesanan pick-up mandiri di outlet ForKos Coffee',
-                'diskon'    => '30%',
-                'status'    => 'Aktif'
-            ],
-            [
-                'kode'      => 'FORKOSHEMAT',
-                'judul'     => 'Potongan Rp5.000',
-                'deskripsi' => 'Minimal belanja Rp25.000 untuk semua varian kopi',
-                'diskon'    => 'Rp5.000',
-                'status'    => 'Aktif'
-            ]
-        ];
+        $outletId = $_GET['outlet'] ?? 'gc';
+        $outletId = in_array($outletId, ['gc', 'batu_ampar'], true) ? $outletId : 'gc';
 
         $this->renderView('voucher', [
-            'vouchers' => $vouchers
+            'vouchers' => $this->voucherModel->getActive(),
+            'outletId' => $outletId
         ]);
     }
 
