@@ -40,6 +40,8 @@ body.app-body {
 
 .brand-text {
     letter-spacing: 0.5px;
+    line-height: 1.2;
+    display: inline-block;
 }
 
 .text-orange {
@@ -66,15 +68,21 @@ body.app-body {
 }
 
 /* Badge SDD */
+/* Badge Mockup SDD */
 .badge-ui {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
     border: 1px solid #d1d5db;
     color: #6b7280;
     font-size: 11px;
     font-weight: 600;
-    padding: 2px 8px;
+    padding: 4px 8px;
     border-radius: 6px;
     background: #ffffff;
+    margin-left: 2px;
+    transform: translateY(1px);
 }
 
 /* Avatar Pengguna */
@@ -246,4 +254,41 @@ body.app-body {
         padding-left: 16px !important;
         padding-right: 16px !important;
     }
+}
+
+/* ========================================================
+   Kunci Jarak & Posisi Navbar Antar Semua Halaman
+   ======================================================== */
+html {
+    overflow-y: scroll; /* Mencegah navbar bergeser kiri-kanan saat pindah halaman */
+}
+
+.forkos-navbar {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #ececec !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.forkos-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.forkos-nav-link {
+    text-decoration: none !important;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1f242d !important;
+    padding: 4px 0 !important;
+    margin: 0 !important;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+}
+
+.forkos-nav-link:hover,
+.forkos-nav-link.active {
+    color: #fa5a00 !important;
+    font-weight: 700;
 }
