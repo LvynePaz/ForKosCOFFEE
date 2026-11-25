@@ -65,23 +65,29 @@ $userName = $_SESSION['user_name'] ?? 'Cikocut';
             <!-- Kolom Kiri: Menu Utama -> Voucher Saya -> Promo Istimewa -->
             <div class="col-12 col-lg-7">
                 
-                <!-- 1. Menu Utama -->
+                <!-- 1. Menu Utama (4 Tombol Sesuai SDD UI-002) -->
                 <div class="mb-3 mb-md-4">
                     <p class="section-sub-title">MENU UTAMA</p>
                     <div class="row g-2 g-md-3 text-center">
-                        <div class="col-4">
+                        <div class="col-3">
                             <a href="index.php?page=katalog" class="menu-item-btn active text-decoration-none">
                                 <i class="bi bi-cup-hot fs-4"></i>
                                 <span>Pesan Sekarang</span>
                             </a>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <a href="index.php?page=voucher" class="menu-item-btn text-decoration-none">
                                 <i class="bi bi-ticket-perforated fs-4"></i>
                                 <span>Voucher</span>
                             </a>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
+                            <a href="index.php?page=katalog" class="menu-item-btn text-decoration-none">
+                                <i class="bi bi-heart fs-4"></i>
+                                <span>Favorit</span>
+                            </a>
+                        </div>
+                        <div class="col-3">
                             <a href="index.php?page=pesanan&tab=riwayat" class="menu-item-btn text-decoration-none">
                                 <i class="bi bi-clock-history fs-4"></i>
                                 <span>Riwayat</span>
@@ -90,25 +96,48 @@ $userName = $_SESSION['user_name'] ?? 'Cikocut';
                     </div>
                 </div>
 
-                <!-- 2. Kartu Voucher Saya (Tepat di bawah Menu Utama, tanpa judul Status Akun) -->
+                <!-- 2. Kartu Ringkasan Akun: Voucher Saya & Favorit Saya (Sesuai SDD UI-002) -->
                 <div class="mb-3 mb-md-4">
-                    <a href="index.php?page=voucher" class="text-decoration-none">
-                        <div class="card-summary p-2 p-md-3 shadow-sm">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="icon-summary-box text-orange">
-                                        <i class="bi bi-ticket fs-4"></i>
-                                    </div>
-                                    <div>
-                                        <span class="d-block fw-bold text-dark" style="font-size: 0.88rem;">Voucher Saya</span>
-                                        <span class="badge bg-light text-orange border border-warning" style="font-size: 0.68rem;">0 Tersedia</span>
-                                        <span class="d-block text-muted small mt-1">Kupon hemat s/d 40%</span>
+                    <div class="row g-2 g-md-3">
+                        <div class="col-6">
+                            <a href="index.php?page=voucher" class="text-decoration-none">
+                                <div class="card-summary p-2 p-md-3 shadow-sm h-100">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center gap-2 gap-md-3">
+                                            <div class="icon-summary-box text-orange">
+                                                <i class="bi bi-ticket fs-5"></i>
+                                            </div>
+                                            <div>
+                                                <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">Voucher Saya</span>
+                                                <span class="badge bg-light text-orange border border-warning" style="font-size: 0.65rem;">0 Tersedia</span>
+                                                <span class="d-none d-md-block text-muted small mt-1" style="font-size: 0.72rem;">Hemat s/d 40%</span>
+                                            </div>
+                                        </div>
+                                        <i class="bi bi-chevron-right text-muted d-none d-sm-block fs-6"></i>
                                     </div>
                                 </div>
-                                <i class="bi bi-chevron-right text-muted pe-2 fs-6"></i>
-                            </div>
+                            </a>
                         </div>
-                    </a>
+                        <div class="col-6">
+                            <a href="index.php?page=katalog" class="text-decoration-none">
+                                <div class="card-summary p-2 p-md-3 shadow-sm h-100">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center gap-2 gap-md-3">
+                                            <div class="icon-summary-box text-orange">
+                                                <i class="bi bi-heart fs-5"></i>
+                                            </div>
+                                            <div>
+                                                <span class="d-block fw-bold text-dark" style="font-size: 0.85rem;">Favorit Saya</span>
+                                                <span class="badge bg-light text-secondary border" style="font-size: 0.65rem;">0 Menu</span>
+                                                <span class="d-none d-md-block text-muted small mt-1" style="font-size: 0.72rem;">Pesan ulang 1 ketuk</span>
+                                            </div>
+                                        </div>
+                                        <i class="bi bi-chevron-right text-muted d-none d-sm-block fs-6"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 3. Promo Istimewa Hari Ini -->

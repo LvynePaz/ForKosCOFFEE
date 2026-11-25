@@ -1,12 +1,31 @@
 <?php
 /**
- * View: Daftar Voucher & Kupon Promo
- * Arsitektur: MVC - View Layer (Flat View)
+ * View: Daftar Voucher & Kupon Promo (UI-002 Addon)
+ * Arsitektur: MVC - View Layer
  * Dokumen SDD: Bab 4.1 & Bab 5.2.2
  * 
  * @var array $vouchers
  */
-$vouchers = $vouchers ?? [];
+$vouchers = $vouchers ?? [
+    [
+        'kode'      => 'yiesanlimaratusjadirefund',
+        'diskon'    => '30%',
+        'judul'     => 'Diskon 30% Ambil Sendiri',
+        'deskripsi' => 'Khusus Self Pick-up di seluruh outlet ForKos Coffee. Maksimal potongan Rp15.000.'
+    ],
+    [
+        'kode'      => 'HEMATKOPI10',
+        'diskon'    => '10%',
+        'judul'     => 'Promo Kopi Pagi',
+        'deskripsi' => 'Berlaku untuk semua menu kopi kategori Kopi Susu & Espresso base sebelum jam 11.00.'
+    ],
+    [
+        'kode'      => 'FORKOSBARU',
+        'diskon'    => '20%',
+        'judul'     => 'Welcome New Member',
+        'deskripsi' => 'Spesial untuk pesanan pertamamu di ForKos Coffee melalui pemesanan web.'
+    ]
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -14,88 +33,131 @@ $vouchers = $vouchers ?? [];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voucher Promo - ForKos Coffee</title>
+    <!-- Fonts & Bootstrap 5 -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        body.mobile-viewport-body {
-            background-color: #2b2b2b;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 24px 10px;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-        .mobile-frame-voucher {
-            width: 100%;
-            max-width: 400px;
+        .voucher-ticket-card {
             background: #ffffff;
-            border-radius: 36px;
-            padding: 26px 20px;
-            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
-        }
-        .voucher-ticket {
-            background: #fff8f5;
             border: 1.5px dashed var(--tomoro-orange, #fa5a00);
-            border-radius: 16px;
-            padding: 14px;
-            margin-bottom: 12px;
+            border-radius: 18px;
+            padding: 20px;
             position: relative;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .btn-back-link {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            border: 1px solid #e3e5e8;
-            background: #ffffff;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: #1f242d;
-            text-decoration: none;
+        .voucher-ticket-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(250, 90, 0, 0.12);
         }
+        .voucher-notch-left, .voucher-notch-right {
+            position: absolute;
+            top: 50%;
+            width: 18px;
+            height: 18px;
+            background: var(--tomoro-bg, #f8f9fa);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+        .voucher-notch-left { left: -9px; }
+        .voucher-notch-right { right: -9px; }
     </style>
 </head>
-<body class="mobile-viewport-body">
+<body class="app-body">
 
-<div class="mobile-frame-voucher">
-    <!-- Header -->
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <a href="index.php" class="btn-back-link" title="Kembali">
-            <i class="bi bi-chevron-left"></i>
-        </a>
-        <h6 class="fw-bold mb-0 text-dark">Kupon & Voucher Saya</h6>
-        <span class="badge-ui">PROMO</span>
-    </div>
-
-    <p class="text-muted small mb-3">Gunakan kode voucher saat checkout untuk menikmati potongan harga menarik.</p>
-
-    <!-- Daftar Tiket Voucher -->
-    <?php foreach ($vouchers as $v): ?>
-        <div class="voucher-ticket">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <span class="badge bg-danger rounded-pill px-2 py-1 small"><?= htmlspecialchars($v['diskon']) ?> OFF</span>
-                    <h6 class="fw-bold text-dark mt-2 mb-1"><?= htmlspecialchars($v['judul']) ?></h6>
-                    <p class="text-muted small mb-2" style="font-size: 0.72rem;"><?= htmlspecialchars($v['deskripsi']) ?></p>
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
+                <div class="brand-mini-icon">
+                    <i class="bi bi-cup-hot-fill text-white"></i>
                 </div>
+                <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
+            </a>
+            
+            <div class="d-none d-md-flex align-items-center gap-3">
+                <a href="index.php?page=home" class="nav-link text-dark fw-semibold">Home</a>
+                <a href="index.php?page=katalog" class="nav-link text-dark fw-semibold">Katalog Menu</a>
+                <a href="index.php?page=voucher" class="nav-link active fw-bold text-orange">Voucher</a>
+                <a href="index.php?page=pesanan" class="nav-link text-dark fw-semibold">Pesanan</a>
             </div>
-            <div class="bg-white p-2 rounded-3 border d-flex justify-content-between align-items-center">
-                <code class="fw-bold text-orange" style="font-size: 0.85rem;"><?= htmlspecialchars($v['kode']) ?></code>
-                <span class="badge bg-light text-muted border">Tersedia</span>
+
+            <div class="d-flex d-md-none align-items-center gap-2">
+                <span class="badge-ui">PROMO</span>
             </div>
         </div>
-    <?php endforeach; ?>
+    </nav>
 
-    <div class="mt-4">
-        <a href="index.php?page=katalog" class="btn btn-coffee-submit py-2 text-decoration-none text-center d-block">
-            Pesan Kopi Sekarang
+    <!-- Konten Utama (Desktop lega, HP rapi) -->
+    <main class="container py-3 py-md-5" style="max-width: 960px;">
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <a href="index.php?page=home" class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                <i class="bi bi-arrow-left fs-5"></i>
+            </a>
+            <div>
+                <h3 class="fw-bold text-dark mb-1">Kupon & Voucher Saya</h3>
+                <p class="text-muted small mb-0">Pilih dan salin kode promo untuk digunakan saat checkout pesanan.</p>
+            </div>
+        </div>
+
+        <!-- Grid Voucher -->
+        <div class="row g-3 g-md-4">
+            <?php foreach ($vouchers as $v): ?>
+                <div class="col-12 col-md-6">
+                    <div class="voucher-ticket-card h-100">
+                        <div class="voucher-notch-left"></div>
+                        <div class="voucher-notch-right"></div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-danger rounded-pill px-3 py-1 fw-bold"><?= htmlspecialchars($v['diskon']) ?> OFF</span>
+                                <span class="badge bg-light text-success border border-success-subtle px-2 py-1 small">
+                                    <i class="bi bi-check-circle me-1"></i>Tersedia
+                                </span>
+                            </div>
+                            <h5 class="fw-bold text-dark mb-1"><?= htmlspecialchars($v['judul']) ?></h5>
+                            <p class="text-muted small mb-3"><?= htmlspecialchars($v['deskripsi']) ?></p>
+                        </div>
+                        <div class="bg-light p-2 px-3 rounded-3 border d-flex justify-content-between align-items-center mt-2">
+                            <div>
+                                <small class="text-muted d-block" style="font-size: 0.68rem;">KODE PROMO</small>
+                                <code class="fw-bold text-orange fs-6"><?= htmlspecialchars($v['kode']) ?></code>
+                            </div>
+                            <a href="index.php?page=katalog" class="btn btn-outline-tomoro btn-sm rounded-pill px-3">
+                                Pakai Menu
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="index.php?page=katalog" class="btn btn-klaim-voucher px-4 py-2 fs-6 text-decoration-none">
+                <i class="bi bi-cup-hot me-2"></i>Pesan Sekarang & Gunakan Kupon
+            </a>
+        </div>
+    </main>
+
+    <!-- Bottom Nav untuk Mobile -->
+    <div class="mobile-bottom-nav d-md-none">
+        <a href="index.php?page=home" class="nav-bottom-item text-decoration-none">
+            <i class="bi bi-house-door"></i>
+            <span>Home</span>
+        </a>
+        <a href="index.php?page=katalog" class="nav-bottom-item text-decoration-none">
+            <i class="bi bi-cup-hot"></i>
+            <span>Menu</span>
+        </a>
+        <a href="index.php?page=pesanan" class="nav-bottom-item text-decoration-none">
+            <i class="bi bi-bag"></i>
+            <span>Pesanan</span>
         </a>
     </div>
-</div>
 
 </body>
 </html>
-

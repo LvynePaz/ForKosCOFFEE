@@ -1,7 +1,7 @@
 <?php
 /**
  * View: Detail Pelacakan Status Pesanan & Pick-up Code (UI-005)
- * Arsitektur: MVC - View Layer (Flat View)
+ * Arsitektur: MVC - View Layer
  * Dokumen SDD: Bab 5.2.5 (UI-005)
  * 
  * @var array $order
@@ -24,33 +24,29 @@ $order = $order ?? [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Pelacakan - ForKos Coffee</title>
+    <!-- Fonts & Bootstrap 5 -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        body.mobile-viewport-body {
-            background-color: #2b2b2b;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 24px 10px;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-        .mobile-frame-track {
-            width: 100%;
-            max-width: 400px;
+        .tracking-card-container {
             background: #ffffff;
-            border-radius: 36px;
-            padding: 26px 20px;
-            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+            border: 1.5px solid #ececec;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        }
+        @media (min-width: 768px) {
+            .tracking-card-container {
+                padding: 36px;
+            }
         }
         .stepper-item {
             display: flex;
             align-items: flex-start;
             position: relative;
-            padding-bottom: 20px;
+            padding-bottom: 22px;
         }
         .stepper-item:last-child {
             padding-bottom: 0;
@@ -58,8 +54,8 @@ $order = $order ?? [
         .stepper-item:not(:last-child)::before {
             content: '';
             position: absolute;
-            left: 11px;
-            top: 24px;
+            left: 12px;
+            top: 26px;
             bottom: 0;
             width: 2px;
             background-color: #e5e7eb;
@@ -68,14 +64,15 @@ $order = $order ?? [
             background-color: var(--tomoro-orange, #fa5a00);
         }
         .stepper-dot {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
-            background-color: #e5e7eb;
+            background-color: #f3f4f6;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 11px;
+            font-weight: 700;
             margin-right: 14px;
             z-index: 2;
             color: #9ca3af;
@@ -90,127 +87,178 @@ $order = $order ?? [
             color: #ffffff;
         }
         .pickup-code-box {
-            background-color: #111827;
+            background: linear-gradient(145deg, #1f242d 0%, #11141a 100%);
             color: #ffffff;
             border-radius: 20px;
-            padding: 20px;
+            padding: 24px;
             text-align: center;
-            margin: 20px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
         .pickup-code-number {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 800;
             letter-spacing: 3px;
             color: #ffffff;
-            margin: 4px 0;
+            margin: 6px 0;
         }
         .qr-placeholder {
-            width: 90px;
-            height: 90px;
+            width: 100px;
+            height: 100px;
             background: #ffffff;
-            border-radius: 12px;
-            margin: 10px auto;
+            border-radius: 14px;
+            margin: 12px auto;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #111827;
-        }
-        .btn-back-link {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            border: 1px solid #e3e5e8;
-            background: #ffffff;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: #1f242d;
-            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
-<body class="mobile-viewport-body">
+<body class="app-body">
 
-<div class="mobile-frame-track">
-    <!-- Header -->
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <a href="index.php" class="btn-back-link" title="Kembali">
-            <i class="bi bi-chevron-left"></i>
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="index.php?page=home">
+                <div class="brand-mini-icon">
+                    <i class="bi bi-cup-hot-fill text-white"></i>
+                </div>
+                <span class="fw-bold fs-6 brand-text">FORKOS <span class="text-orange">COFFEE</span></span>
+            </a>
+            
+            <div class="d-none d-md-flex align-items-center gap-3">
+                <a href="index.php?page=home" class="nav-link text-dark fw-semibold">Home</a>
+                <a href="index.php?page=katalog" class="nav-link text-dark fw-semibold">Katalog Menu</a>
+                <a href="index.php?page=voucher" class="nav-link text-dark fw-semibold">Voucher</a>
+                <a href="index.php?page=pesanan" class="nav-link active fw-bold text-orange">Pesanan</a>
+            </div>
+
+            <div class="d-flex d-md-none align-items-center gap-2">
+                <span class="badge-ui">UI-005</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Konten Utama (Window/Desktop 2 Kolom, Mobile 1 Kolom) -->
+    <main class="container py-3 py-md-5" style="max-width: 980px;">
+        
+        <div class="d-flex align-items-center justify-content-between mb-3 mb-md-4">
+            <div class="d-flex align-items-center gap-3">
+                <a href="index.php?page=home" class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                    <i class="bi bi-arrow-left fs-5"></i>
+                </a>
+                <div>
+                    <h3 class="fw-bold text-dark mb-0">Detail Pelacakan</h3>
+                    <p class="text-muted small mb-0">Pantau progres pembuatan kopimu secara real-time.</p>
+                </div>
+            </div>
+            <span class="badge-ui d-none d-md-inline-block">UI-005</span>
+        </div>
+
+        <div class="tracking-card-container">
+            <!-- Header ID Pesanan & Outlet -->
+            <div class="bg-light p-3 px-4 rounded-4 d-flex justify-content-between align-items-center mb-4 border">
+                <div>
+                    <div class="text-muted small" style="font-size: 0.75rem;">ID Pesanan</div>
+                    <div class="fw-bold text-dark"><?= htmlspecialchars($order['id_pesanan']) ?></div>
+                </div>
+                <div class="text-end">
+                    <div class="text-muted small" style="font-size: 0.75rem;">Outlet Pengambilan</div>
+                    <div class="fw-bold text-orange fs-6"><?= htmlspecialchars($order['outlet']) ?></div>
+                </div>
+            </div>
+
+            <div class="row g-4 align-items-start">
+                
+                <!-- Kolom Kiri: Stepper Status & Rincian Menu -->
+                <div class="col-12 col-md-6 order-2 order-md-1">
+                    <h6 class="fw-bold text-dark mb-3">Status Pemesanan</h6>
+                    <div class="py-2 px-1 mb-4">
+                        <div class="stepper-item completed">
+                            <div class="stepper-dot"><i class="bi bi-check-lg"></i></div>
+                            <div>
+                                <div class="fw-bold text-dark small">Pesanan Diterima</div>
+                                <div class="text-muted" style="font-size: 0.72rem;">09:42 WIB</div>
+                            </div>
+                        </div>
+                        <div class="stepper-item active">
+                            <div class="stepper-dot"><i class="bi bi-clock-fill"></i></div>
+                            <div>
+                                <div class="fw-bold text-orange small">Sedang Dibuat</div>
+                                <div class="text-muted" style="font-size: 0.72rem;"><?= htmlspecialchars($order['estimasi']) ?></div>
+                            </div>
+                        </div>
+                        <div class="stepper-item">
+                            <div class="stepper-dot">3</div>
+                            <div>
+                                <div class="fw-bold text-muted small">Siap Diambil</div>
+                                <div class="text-muted" style="font-size: 0.72rem;">Tunjukkan kode pengambilan ke kasir</div>
+                            </div>
+                        </div>
+                        <div class="stepper-item">
+                            <div class="stepper-dot">4</div>
+                            <div>
+                                <div class="fw-bold text-muted small">Selesai</div>
+                                <div class="text-muted" style="font-size: 0.72rem;">Pesanan telah diserahkan</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rincian Menu -->
+                    <div class="p-3 bg-light rounded-3 border">
+                        <span class="text-muted d-block small mb-2" style="font-size: 0.75rem;">RINCIAN PESANAN</span>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-bold text-dark"><?= $order['kuantitas'] ?>x <?= htmlspecialchars($order['item_nama']) ?></div>
+                                <div class="text-muted" style="font-size: 0.75rem;"><?= htmlspecialchars($order['kustomisasi']) ?></div>
+                            </div>
+                            <div class="fw-bold text-orange fs-5">
+                                Rp<?= number_format($order['total_harga'], 0, ',', '.') ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Black Pick-Up Code Card + QR (Sesuai SDD Gambar 5.6) -->
+                <div class="col-12 col-md-6 order-1 order-md-2">
+                    <div class="pickup-code-box">
+                        <div class="text-uppercase tracking-wider text-white-50 small fw-bold" style="font-size: 0.75rem;">PICK-UP CODE</div>
+                        <div class="pickup-code-number"><?= htmlspecialchars($order['pick_up_code']) ?></div>
+                        <div class="qr-placeholder">
+                            <i class="bi bi-qr-code text-dark" style="font-size: 4rem;"></i>
+                        </div>
+                        <div class="text-white-50 mt-2" style="font-size: 0.75rem;">Tunjukkan kode atau QR ini ke barista saat mengambil kopi</div>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="index.php?page=home" class="btn btn-klaim-voucher w-100 py-3 text-center text-decoration-none">
+                            <i class="bi bi-house-door me-2"></i>Kembali ke Beranda
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Bottom Nav untuk Layar HP -->
+    <div class="mobile-bottom-nav d-md-none">
+        <a href="index.php?page=home" class="nav-bottom-item text-decoration-none">
+            <i class="bi bi-house-door"></i>
+            <span>Home</span>
         </a>
-        <h6 class="fw-bold mb-0 text-dark">Detail Pelacakan</h6>
-        <span class="badge-ui">UI-005</span>
+        <a href="index.php?page=katalog" class="nav-bottom-item text-decoration-none">
+            <i class="bi bi-cup-hot"></i>
+            <span>Menu</span>
+        </a>
+        <a href="index.php?page=pesanan" class="nav-bottom-item active text-decoration-none">
+            <i class="bi bi-bag-fill"></i>
+            <span>Pesanan</span>
+        </a>
     </div>
-
-    <!-- ID Pesanan & Outlet -->
-    <div class="bg-light p-3 rounded-4 d-flex justify-content-between align-items-center mb-3">
-        <div>
-            <div class="text-muted" style="font-size: 0.7rem;">ID Pesanan</div>
-            <div class="fw-bold small text-dark"><?= htmlspecialchars($order['id_pesanan']) ?></div>
-        </div>
-        <div class="text-end">
-            <div class="text-muted" style="font-size: 0.7rem;">Outlet Pengambilan</div>
-            <div class="fw-bold small text-orange"><?= htmlspecialchars($order['outlet']) ?></div>
-        </div>
-    </div>
-
-    <!-- Stepper Status Pesanan (SDD Bab 5.2.5) -->
-    <div class="py-2 px-1 mb-2">
-        <div class="stepper-item completed">
-            <div class="stepper-dot"><i class="bi bi-check"></i></div>
-            <div>
-                <div class="fw-bold small text-dark">Pesanan Diterima</div>
-                <div class="text-muted" style="font-size: 0.68rem;">09:42 WIB</div>
-            </div>
-        </div>
-        <div class="stepper-item active">
-            <div class="stepper-dot"><i class="bi bi-clock-fill"></i></div>
-            <div>
-                <div class="fw-bold small text-orange">Sedang Dibuat</div>
-                <div class="text-muted" style="font-size: 0.68rem;"><?= htmlspecialchars($order['estimasi']) ?></div>
-            </div>
-        </div>
-        <div class="stepper-item">
-            <div class="stepper-dot">3</div>
-            <div>
-                <div class="fw-bold small text-muted">Siap Diambil</div>
-                <div class="text-muted" style="font-size: 0.68rem;">Tunjukkan kode pengambilan ke kasir</div>
-            </div>
-        </div>
-        <div class="stepper-item">
-            <div class="stepper-dot">4</div>
-            <div>
-                <div class="fw-bold small text-muted">Selesai</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Panel Pick-Up Code & QR Code (SDD Gambar 5.6) -->
-    <div class="pickup-code-box">
-        <div class="text-uppercase tracking-wider text-white-50 small" style="font-size: 0.7rem;">PICK-UP CODE</div>
-        <div class="pickup-code-number"><?= htmlspecialchars($order['pick_up_code']) ?></div>
-        <div class="qr-placeholder">
-            <i class="bi bi-qr-code text-dark" style="font-size: 3.5rem;"></i>
-        </div>
-        <div class="text-white-50" style="font-size: 0.65rem;">Tunjukkan kode ini ke barista outlet</div>
-    </div>
-
-    <!-- Rincian Ringkas Pesanan -->
-    <div class="d-flex justify-content-between align-items-center py-2 px-1 border-top border-bottom mb-3">
-        <div>
-            <div class="fw-bold small text-dark"><?= $order['kuantitas'] ?>x <?= htmlspecialchars($order['item_nama']) ?></div>
-            <div class="text-muted" style="font-size: 0.68rem;"><?= htmlspecialchars($order['kustomisasi']) ?></div>
-        </div>
-        <div class="fw-bold small text-orange">
-            Rp<?= number_format($order['total_harga'], 0, ',', '.') ?>
-        </div>
-    </div>
-
-    <!-- Tombol Kembali ke Home -->
-    <a href="index.php" class="btn btn-coffee-submit py-2 text-decoration-none text-center d-block">
-        Kembali ke Home
-    </a>
-</div>
 
 </body>
 </html>
-
